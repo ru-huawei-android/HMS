@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/btnForceCrash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@mipmap/ic_launcher"
+        android:text="@string/force_a_crash"
+        android:layout_gravity="center"
+        />
+
+<!--    <com.huawei.hms.maps.MapView-->
+<!--        android:visibility="gone"-->
+<!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
+<!--        android:id="@+id/mapView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        map:cameraTargetLat="48"-->
+<!--        map:cameraTargetLng="2"-->
+<!--        map:cameraZoom="11"-->
+<!--        map:mapType="satellite"-->
+<!--        map:uiCompass="false"-->
+<!--        map:uiZoomControls="true"-->
+<!--        map:zOrderOnTop="false"/>-->
+
+<!--    <TextView-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:id="@+id/zoomPlus"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_gravity="center_vertical|end"-->
+<!--        android:background="@android:color/white"-->
+<!--        android:gravity="center"-->
+<!--        android:text="+"/>-->
+
+</FrameLayout>
