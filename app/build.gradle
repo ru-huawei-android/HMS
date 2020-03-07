@@ -78,6 +78,8 @@ dependencies {
     // Changelog: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/push-change
     // Не забудьте прописать push-сервис в вашем Manifest.xml
 
+    // Как послать тестовый пуш из консоли разработчика?
+    // https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/push-console
     implementation 'com.huawei.hms:push:4.0.0.300'
     // Если вы используете proguard, правила можно скопировать из файла proguard-project.txt
 
