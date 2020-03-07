@@ -48,6 +48,7 @@ dependencies {
     // Подробный гайд здесь: https://developer.huawei.com/consumer/en/service/hms/catalog/AGCHelp.html?page=AGC_appGalleryConnect_associated_service
     // После включения Kits и добавления SHA256, скачайте agconnect-services.json и положите его в проект
 
+    // Если Android studio не видит ваше Huawei устройство - переключите его в режим соединения MTP (передача файлов)
     implementation "androidx.core:core-ktx:1.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
