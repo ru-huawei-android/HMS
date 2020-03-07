@@ -70,6 +70,7 @@ dependencies {
     // Основные причины "почему не работает" описаны в FAQ, пункт номер 3
     implementation 'com.huawei.hms:hianalytics:4.0.0.300'
 
+    // Если у вас уже интегрирован другой сервис перехвата crash (например YandexMetrica), то вероятнее всего будет работать только один из них
     // График крэшей в Web-интерфейсе отрисовывается с запозданием где-то в 5-10 минут, можно найти здесь:
     // Huawei AppGallery -> Мои приложения -> Приложение -> Разработка -> Качество (внизу) -> Crash
     // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-crash-getstarted

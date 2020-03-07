@@ -16,6 +16,7 @@
 
 package com.huawei.hms.sample2
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.os.Build
@@ -55,6 +56,7 @@ class HiAnalyticsWrapper(var context: Context?) {
         hiAnalyticsInstance?.onEvent(EVENT_WITH_BUNDLE, bundle)
     }
 
+    @TargetApi(4)
     fun reportEventDeviceInfoBundle() {
         val bundle = Bundle()
         bundle.putString(PARAM_DEVICE, Build.DEVICE)
