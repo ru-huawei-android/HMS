@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">HUAWEIHMSSampleProject</string>
 
-    <string name="force_a_crash">force a crash</string>
+    <string name="get_last_init">push the button</string>
+    <string name="get_last_searching">searching…</string>
+    <string name="get_last_failed">failed</string>
+    <string name="get_last_null">location is null - did you grant the required permission?</string>
+    <string name="get_last_caption">Get last location</string>
+
+    <string name="str_activity_recognition">Enable user activity recognition</string>
+    <string name="str_activity_recognition_failed">recognition awaiting</string>
 </resources>
