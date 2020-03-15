@@ -16,11 +16,7 @@
 
 package com.huawei.hms.sample2
 
-import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
-import android.os.Build
-import android.os.Bundle
 import com.huawei.hms.aaid.HmsInstanceId
 import com.huawei.hms.analytics.HiAnalytics
 import com.huawei.hms.analytics.HiAnalyticsInstance
@@ -43,33 +39,7 @@ class HiAnalyticsWrapper(var context: Context?) {
     private fun isHmsAvailable(context: Context?) = HuaweiApiAvailability.getInstance()
             .isHuaweiMobileServicesAvailable(context) == ConnectionResult.SUCCESS
 
-    // Ограничение по событиям: 500 на приложение, имя события ограничено 256 символами
-    fun reportEventNoBundle() = hiAnalyticsInstance?.onEvent(EVENT_NO_BUNDLE, null)
-
-    // Аналитика не отображает bundle событий пока вы не добавите их и их параметры в
-    // Анализ -> Расширенная Аналитика -> Мета-менеджмент -> Мероприятие
-    // Ограничение по параметрам 25 на событие, 100 на одно приложение, имя параметра не более 256 символов
-    fun reportEventStringBundle() {
-        val bundle = Bundle()
-        bundle.putString(PARAM_1, "PEW PEW")
-        bundle.putString(PARAM_2, "PEW PEW")
-        hiAnalyticsInstance?.onEvent(EVENT_WITH_BUNDLE, bundle)
-    }
-
-    @TargetApi(4)
-    fun reportEventDeviceInfoBundle() {
-        val bundle = Bundle()
-        bundle.putString(PARAM_DEVICE, Build.DEVICE)
-        bundle.putString(PARAM_MANUFACTURER, Build.MANUFACTURER)
-        bundle.putString(PARAM_MODEL, Build.MODEL)
-        hiAnalyticsInstance?.onEvent(EVENT_WITH_DEVICE_INFO_BUNDLE, bundle)
-    }
-
-    // Передает информацию о том, на каком экране пользователь проводит свое время
-    // Если событие задано, то Web-интерфейсе можно посмотреть наиболее популярные у пользователей экраны
-    fun reportScreen(activity: Activity?, name: String) {
-        hiAnalyticsInstance?.setCurrentActivity(activity, name, name)
-    }
+    // Подробнее по аналитике в ветке v4-analytics-crash-kotlin
 
     // Связывает сессию клиента с некоторым его идентификатором, например его AAID - подробнее о AAID
     // по этой ссылке: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/Development-Guide#h1-6-accessing-analytics
@@ -78,15 +48,4 @@ class HiAnalyticsWrapper(var context: Context?) {
         log("AAID: " + HmsInstanceId.getInstance(context).id)
     }
 
-    companion object {
-        const val EVENT_NO_BUNDLE = "EVENT_NO_BUNDLE"
-        const val EVENT_WITH_BUNDLE = "EVENT_WITH_BUNDLE"
-        const val EVENT_WITH_DEVICE_INFO_BUNDLE = "EVENT_WITH_DEVICE_INFO_BUNDLE"
-
-        const val PARAM_1 = "ONE"
-        const val PARAM_2 = "TWO"
-        const val PARAM_DEVICE = "Device"
-        const val PARAM_MANUFACTURER = "Manufacturer"
-        const val PARAM_MODEL = "Model"
-    }
 }
