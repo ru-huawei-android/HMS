@@ -12,7 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
-
+app/*.iml
 
 # Built application files
 /*/build/
