@@ -18,9 +18,12 @@ package com.huawei.hms.sample2
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.Activity
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -31,17 +34,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.huawei.hmf.tasks.OnSuccessListener
 import com.huawei.hmf.tasks.Task
-import com.huawei.hms.location.FusedLocationProviderClient
-import com.huawei.hms.location.LocationServices
+import com.huawei.hms.location.*
+import com.huawei.hms.sample2.LocationBroadcastReceiver.Companion.ACTION_DELIVER_LOCATION
+import com.huawei.hms.sample2.LocationBroadcastReceiver.Companion.ACTION_PROCESS_LOCATION
+import com.huawei.hms.sample2.LocationBroadcastReceiver.Companion.EXTRA_HMS_LOCATION_AVAILABILITY
+import com.huawei.hms.sample2.LocationBroadcastReceiver.Companion.EXTRA_HMS_LOCATION_RECOGNITION
+import com.huawei.hms.sample2.LocationBroadcastReceiver.Companion.EXTRA_HMS_LOCATION_CONVERSION
+import com.huawei.hms.sample2.LocationBroadcastReceiver.Companion.EXTRA_HMS_LOCATION_RESULT
+import com.huawei.hms.sample2.LocationBroadcastReceiver.Companion.REQUEST_PERIOD
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.reflect.InvocationTargetException
-import java.lang.reflect.Method
+import java.util.ArrayList
 
 
 //::created by c7j at 09.03.2020 19:32
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var activityIdentificationService: ActivityIdentificationService
+    private var pendingIntent: PendingIntent? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,64 +59,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         supportActionBar?.hide()
         requestPermission()
 
+        pendingIntent = getPendingIntent()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        btnCheckLocation.setOnClickListener {
-            requestLocation()
-        }
+        activityIdentificationService = ActivityIdentification.getService(this)
+
+        btnCheckLocation.setOnClickListener { requestLastLocation() }
 
         toggleRecognition.setOnCheckedChangeListener { _: CompoundButton, enabled: Boolean ->
             requestActivityRecognitionPermission(this)
-            if (enabled) {
-                log("enabled")
-            } else {
-                log("disabled")
-                stopUserActivityTracking()
-            }
+            if (enabled) startUserActivityTracking() else stopUserActivityTracking()
         }
-
-        log("EMUI: " + readEMUIVersion())
-        log("EMUI: " + extractEmuiVersion())
-    }
-
-
-    @SuppressLint("PrivateApi")
-    private fun Any?.readEMUIVersion() : String {
-        try {
-            val propertyClass = Class.forName("android.os.SystemProperties")
-            val method: Method = propertyClass.getMethod("get", String::class.java)
-            var versionEmui = method.invoke(propertyClass, "ro.build.version.emui") as String
-            if (versionEmui.startsWith("EmotionUI_")) {
-                versionEmui = versionEmui.substring(10, versionEmui.length)
-            }
-            return versionEmui
-        } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-        } catch (e: NoSuchMethodException) {
-            e.printStackTrace()
-        } catch (e: IllegalAccessException) {
-            e.printStackTrace()
-        } catch (e: InvocationTargetException) {
-            e.printStackTrace()
-        }
-        return ""
-    }
-
-    @TargetApi(3)
-    fun Any?.extractEmuiVersion() : String {
-        return try {
-            val line: String = Build.DISPLAY
-            log(line)
-            val spaceIndex = line.indexOf(" ")
-            val lastIndex = line.indexOf("#")
-            if (lastIndex != -1) {
-                line.substring(spaceIndex, lastIndex)
-            } else line.substring(spaceIndex)
-        } catch (e: Exception) { "" }
     }
 
 
     @SuppressLint("SetTextI18n")
-    private fun requestLocation() {
+    private fun requestLastLocation() {
         try {
             tvPosition.text = getString(R.string.get_last_searching)
             val lastLocation: Task<Location> = fusedLocationProviderClient.lastLocation
@@ -129,14 +96,104 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
 
-    private fun startUserActivityTracking() {
-
+    private val gpsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == ACTION_DELIVER_LOCATION) {
+                updateActivityIdentificationUI(intent.extras?.getParcelableArrayList(EXTRA_HMS_LOCATION_RECOGNITION))
+                updateActivityConversionUI(intent.extras?.getParcelableArrayList(EXTRA_HMS_LOCATION_CONVERSION))
+                updateLocationsUI(intent.extras?.getParcelableArrayList(EXTRA_HMS_LOCATION_RESULT))
+            }
+        }
     }
+
+
+    private fun getPendingIntent(): PendingIntent? {
+        val intent = Intent(this, LocationBroadcastReceiver::class.java)
+        intent.action = ACTION_PROCESS_LOCATION
+        return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        toggleRecognition.isChecked = false
+    }
+
+
+    fun updateActivityIdentificationUI(statuses: ArrayList<ActivityIdentificationData>?) {
+        statuses?.let {
+            var out = ""
+            statuses.forEach {
+                out += LocationBroadcastReceiver.statusFromCode(it.identificationActivity)
+                out += " "
+            }
+            tvRecognition.text = out
+        } ?: run { tvRecognition.text = getString(R.string.str_activity_recognition_failed) }
+    }
+
+
+    fun updateActivityConversionUI(statuses: ArrayList<ActivityConversionData>?) {
+        statuses?.let {
+            var out = ""
+            statuses.forEach {
+                out += LocationBroadcastReceiver.statusFromCode(it.conversionType)
+                out += " "
+            }
+            tvConversion.text = out
+        } ?: run { tvConversion.text = getString(R.string.str_activity_conversion_failed) }
+    }
+
+
+    fun updateLocationsUI(locations: ArrayList<Location>?) {
+        locations?.let {
+            var out = ""
+            locations.forEach {
+                out += it.toString()
+                out += " "
+            }
+            tvLocations.text = out
+        } ?: run { tvLocations.text = getString(R.string.str_activity_locations_failed) }
+    }
+
+
+    private fun startUserActivityTracking() {
+        registerReceiver(gpsReceiver, IntentFilter(ACTION_DELIVER_LOCATION))
+        requestActivityUpdates(REQUEST_PERIOD)
+    }
+
 
     private fun stopUserActivityTracking() {
-
+        unregisterReceiver(gpsReceiver)
+        removeActivityUpdates()
     }
 
+    private fun requestActivityUpdates(detectionIntervalMillis: Long) {
+        try {
+            if (pendingIntent != null) removeActivityUpdates()
+            pendingIntent = getPendingIntent()
+            isListenActivityIdentification = true
+            activityIdentificationService.createActivityIdentificationUpdates(detectionIntervalMillis, pendingIntent)
+                    .addOnSuccessListener { log("createActivityIdentificationUpdates onSuccess") }
+                    .addOnFailureListener { e -> log("createActivityIdentificationUpdates onFailure:" + e.message) }
+        } catch (e: java.lang.Exception) {
+            log("createActivityIdentificationUpdates exception:" + e.message)
+        }
+    }
+
+    private fun removeActivityUpdates() {
+        try {
+            isListenActivityIdentification = false
+            log("start to removeActivityUpdates")
+            activityIdentificationService.deleteActivityIdentificationUpdates(pendingIntent)
+                    .addOnSuccessListener { log("deleteActivityIdentificationUpdates onSuccess") }
+                    .addOnFailureListener { e -> log("deleteActivityIdentificationUpdates onFailure:" + e.message) }
+        } catch (e: java.lang.Exception) {
+            log("removeActivityUpdates exception:" + e.message)
+        }
+    }
+
+
+    //-------------------------------------------
     private fun requestPermission() {
         // You must have the ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION permission.
         // Otherwise, the location service is unavailable.
@@ -189,7 +246,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             if (grantResults.size > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 log("onRequestPermissionsResult: apply LOCATION PERMISSION successful")
-                requestLocation()
+                requestLastLocation()
             } else {
                 log("onRequestPermissionsResult: apply LOCATION PERMISSION failed")
             }
@@ -199,7 +256,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 log("onRequestPermissionsResult: apply ACCESS_BACKGROUND_LOCATION successful")
-                requestLocation()
+                requestLastLocation()
             } else {
                 log("onRequestPermissionsResult: apply ACCESS_BACKGROUND_LOCATION  failed")
             }
@@ -220,6 +277,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 log("onRequestPermissionsResult: apply " + Manifest.permission.ACTIVITY_RECOGNITION + " failed")
             }
         }
+    }
+
+    companion object {
+        var isListenActivityIdentification = true
     }
 }
 

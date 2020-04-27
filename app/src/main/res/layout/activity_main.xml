@@ -69,12 +69,40 @@
         android:id="@+id/tvRecognition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/str_activity_recognition_failed"
         android:gravity="center"
         android:textColor="@android:color/darker_gray"
         android:layout_gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/toggleRecognition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvConversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/str_activity_conversion_failed"
+        android:gravity="center"
+        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tvRecognition"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvLocations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/str_activity_locations_failed"
+        android:gravity="center"
+        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tvConversion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />

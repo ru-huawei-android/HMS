@@ -9,4 +9,7 @@
 
     <string name="str_activity_recognition">Enable user activity recognition</string>
     <string name="str_activity_recognition_failed">recognition awaiting</string>
+    <string name="str_activity_conversion_failed">conversion awaiting</string>
+    <string name="str_activity_locations_failed">no location data</string>
+
 </resources>

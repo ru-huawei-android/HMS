@@ -27,12 +27,27 @@
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
+
         <activity android:name="com.huawei.hms.sample2.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".LocationBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.hms.sample2.LocationBroadcastReceiver.ACTION_PROCESS_LOCATION"/>
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="com.huawei.hms.sample2.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
 
         <meta-data
             android:name="com.huawei.hms.client.appid"
