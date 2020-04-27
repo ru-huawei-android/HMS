@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun updateRemoteConfig() {
         tvRemoteConfig.text = "loading..."
         remoteConfig = AGConnectConfig.getInstance()
-        remoteConfig.applyDefault(R.xml.remote_config_huawei_default)   //set defaults from resources file
+//        remoteConfig.applyDefault(R.xml.remote_config_huawei_default)   //set defaults from resources file
         // Or set defaults from map object (only string, boolean and numeral values; else are ignored)
         setUpDefaultsFromMap()
 
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         map["test2"] = "false"
         map["test3"] = 123
         map["test4"] = 123.456
-        map["test5"] = "test-test"
+        map["test5"] = "test-test-from-map"
         remoteConfig.applyDefault(map)
     }
 
