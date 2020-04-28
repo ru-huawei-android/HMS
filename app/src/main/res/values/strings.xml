@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">HUAWEIHMSSampleProject</string>
 
-    <string name="force_a_crash">force a crash</string>
+    <string name="force_a_crash">send push from\nthe web console</string>
 </resources>
