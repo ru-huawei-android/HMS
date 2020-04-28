@@ -61,14 +61,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
          * If the getValueAs() conversion fails, the default value of the requested data type is returned:
          * @see com.huawei.agconnect.remoteconfig.AGConnectConfig.DEFAULT
          */
-        log(    "Before: \n" +
-                remoteConfig.getValueAsString("test1") + "\n" +
-                remoteConfig.getValueAsBoolean("test2") + "\n" +
-                remoteConfig.getValueAsLong("test3") + "\n" +
-                remoteConfig.getValueAsDouble("test4") + "\n" +
-                remoteConfig.getValueAsString("test5") + "\n" +
-                "source: " + remoteConfig.getSource("test1")
-        )
+        log("Before: \n" + output(remoteConfig))
+        tvRemoteConfig.text = output(remoteConfig)
 
         // All supported values:
         // https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-References/configvalues
@@ -77,22 +71,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         remoteConfig.fetch()  //fetch(0)
                 .addOnSuccessListener { configValues ->
                     remoteConfig.apply(configValues)
-                    log("After: \n" +
-                            remoteConfig.getValueAsString("test1") + "\n" +
-                            remoteConfig.getValueAsBoolean("test2") + "\n" +
-                            remoteConfig.getValueAsLong("test3") + "\n" +
-                            remoteConfig.getValueAsDouble("test4") + "\n" +
-                            remoteConfig.getValueAsString("test5") + "\n" +
-                            "source: " + remoteConfig.getSource("test1"))
-                    tvRemoteConfig.text = "success"
+                    log("After: \n" + output(remoteConfig))
+                    tvRemoteConfig.text = output(remoteConfig)
                 }
                 .addOnFailureListener {
                     exception -> log(exception)
-                    tvRemoteConfig.text = "exception: $exception"
+//                    tvRemoteConfig.text = "exception: $exception"
                 }
-
-
     }
+
+
+    private fun output(remoteConfig: AGConnectConfig) : String =
+                remoteConfig.getValueAsString("test1") + "\n" +
+                remoteConfig.getValueAsBoolean("test2") + "\n" +
+                remoteConfig.getValueAsLong("test3") + "\n" +
+                remoteConfig.getValueAsDouble("test4") + "\n" +
+                remoteConfig.getValueAsString("test5") + "\n" +
+                "source: " + remoteConfig.getSource("test1")
+
 
     private fun setUpDefaultsFromMap() {
         val map: MutableMap<String, Any> = HashMap()
