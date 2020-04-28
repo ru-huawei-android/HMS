@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".MainActivity">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:drawableTop="@mipmap/ic_launcher"
         android:text="@string/force_a_crash"
+        android:textColor="@android:color/holo_blue_dark"
         android:layout_gravity="center"
         />
 
