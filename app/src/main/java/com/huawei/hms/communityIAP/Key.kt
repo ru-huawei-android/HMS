@@ -31,10 +31,13 @@ object Key {
     const val MONTHLY_PRO = "monthly_pro"
     const val SEASON_PRO = "seasonal_pro"
     const val ANNUAL_PRO = "annual_pro"
+    const val PLATINUM_VER = "platinum_version"
 
     // consumable
-
+    const val SEED = "seed"
+    const val SOIL_PIECE = "soil_piece"
 
     // non-consumable
-
+    const val BEGINNER_PACK = "beginner_pack"
+    const val SKILLED_PACK = "skilled_pack"
 }

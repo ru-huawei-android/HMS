@@ -23,16 +23,26 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.huawei.hms.iap.Iap
-import com.huawei.hms.iap.IapApiException
-import com.huawei.hms.iap.IapClient
-import com.huawei.hms.iap.entity.*
 import com.huawei.hms.communityIAP.Key.ANNUAL_PRO
+import com.huawei.hms.communityIAP.Key.BEGINNER_PACK
 import com.huawei.hms.communityIAP.Key.MONTHLY_PRO
 import com.huawei.hms.communityIAP.Key.REQ_CODE_BUY
 import com.huawei.hms.communityIAP.Key.REQ_CODE_LOGIN
 import com.huawei.hms.communityIAP.Key.SEASON_PRO
+import com.huawei.hms.communityIAP.Key.SEED
+import com.huawei.hms.communityIAP.Key.SKILLED_PACK
+import com.huawei.hms.communityIAP.Key.SOIL_PIECE
+import com.huawei.hms.iap.Iap
+import com.huawei.hms.iap.IapApiException
+import com.huawei.hms.iap.IapClient
+import com.huawei.hms.iap.entity.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 const val TAG = "v4-IAP-Demo"
@@ -44,43 +54,70 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // проверяем доступность сервиса в регионе
-        //isEnvironmentReady()
+        isEnvironmentReady()
         // проверяем доступность тестового окружения при необходимости
         checkSandboxing()
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = RecyclerViewAdapter(products, ::gotoPay)
     }
 
-    /**
-     * Загружаем информацию о продуктах
-     */
-    private fun loadProducts() {
-        Iap.getIapClient(this).obtainProductInfo(createProductInfoReq()).also {
-            it.addOnSuccessListener { result ->
-                if (result?.productInfoList?.isNotEmpty() == true) {
-                    showProduct(result.productInfoList)
-                }
-            }.addOnFailureListener { e ->
-                Log.e(TAG, "Load products error! Check product keys and public IAP key has been set correctly")
-                Toast.makeText(this, "Load products error", Toast.LENGTH_SHORT).show()
+    override fun onStart() {
+        super.onStart()
+        print("onStart")
+    }
+
+    private fun initControls() {
+        GlobalScope.launch {
+            val nonConsums =
+                    loadProducts(
+                            IapClient.PriceType.IN_APP_CONSUMABLE,
+                            listOf(BEGINNER_PACK, SKILLED_PACK))
+            val subs = loadProducts(
+                    IapClient.PriceType.IN_APP_SUBSCRIPTION,
+                    listOf(MONTHLY_PRO, SEASON_PRO, ANNUAL_PRO)
+            )
+            val consums =
+                    loadProducts(
+                            IapClient.PriceType.IN_APP_NONCONSUMABLE,
+                            listOf(SEED, SOIL_PIECE))
+            withContext(Dispatchers.Main) {
+                showProduct(consums + nonConsums + subs)
             }
         }
     }
 
-    private fun createProductInfoReq(): ProductInfoReq? {
-        val req = ProductInfoReq()
-        // запрос продуктов происходит в соответствии с типом
-        // в данном случае это подписки с автопродлением
-        req.priceType = IapClient.PriceType.IN_APP_SUBSCRIPTION
-        // Здесь требуется добавить сконфигурированные на странице продуктов идентификаторы
-        req.productIds = listOf(MONTHLY_PRO, SEASON_PRO, ANNUAL_PRO)
-        return req
-    }
+    /**
+     * Загружаем информацию о продуктах
+     */
+    private suspend fun loadProducts(type: Int, products: List<String>): List<ProductInfo> =
+            suspendCoroutine { continuation ->
+                Iap.getIapClient(this)
+                        .obtainProductInfo(
+                                ProductInfoReq().apply {
+                                    priceType = type     // запрос продуктов происходит в соответствии с типом
+                                    productIds = products   // Здесь требуется добавить сконфигурированные на странице продуктов идентификаторы
+                                }
+                        )
+                        .also {
+                            it.addOnSuccessListener { result ->
+                                if (result?.productInfoList?.isNotEmpty() == true) {
+                                    continuation.resume(result.productInfoList)
+                                } else {
+                                    continuation.resume(emptyList())
+                                }
+                            }.addOnFailureListener { e ->
+                                Log.e(TAG, "Load products error! Check product keys and public IAP key has been set correctly")
+                                Toast.makeText(this, "Load products error", Toast.LENGTH_SHORT).show()
+                                continuation.resume(emptyList())
+                            }
+                        }
+            }
 
     private fun showProduct(list: List<ProductInfo>) {
-        products = list.map {
-            ProductModel(it.productName, it.productDesc, it.price, it.productId)
-        } as ArrayList<ProductModel>
+        products.clear()
+        products.addAll(list.map {
+            ProductModel(it.productName, it.productDesc, it.price, it.productId, it.priceType)
+        } as ArrayList<ProductModel>)
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
@@ -162,7 +199,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             if (data != null) {
                 // Obtain the execution result.
                 val returnCode: Int = data.getIntExtra("returnCode", 1)
-                if (returnCode == 0) loadProducts()
+                if (returnCode == 0) initControls()
             }
         }
     }
@@ -174,7 +211,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 .addOnSuccessListener {
                     // Сервис доступен
                     // загружаем доступные продукты
-                    loadProducts()
+                    initControls()
                 }.addOnFailureListener { e ->
                     if (e is IapApiException) {
                         when (e.status.statusCode) {
@@ -200,6 +237,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     // проверка доступности изолированного окружения для совершения тестовых платежей
     // подробнее здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-sandbox-testing-v4
+    // на начало мая 2020 недоступно
     private fun checkSandboxing() {
         Iap.getIapClient(this)
                 .isSandboxActivated(IsSandboxActivatedReq())

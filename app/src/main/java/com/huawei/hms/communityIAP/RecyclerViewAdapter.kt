@@ -30,7 +30,9 @@ class RecyclerViewAdapter(private val products: ArrayList<ProductModel>,
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         init {
             v.setOnClickListener {
-                payProcess(products[adapterPosition].productId, IapClient.PriceType.IN_APP_SUBSCRIPTION)
+                with(products[adapterPosition]) {
+                    payProcess(productId, type)
+                }
             }
         }
     }
@@ -50,6 +52,12 @@ class RecyclerViewAdapter(private val products: ArrayList<ProductModel>,
             priceTextView.text = products[position].price
             itemHeader.text = products[position].title
             itemText.text = products[position].description
+            itemType.text = when (products[position].type) {
+                IapClient.PriceType.IN_APP_SUBSCRIPTION -> "Subscription"
+                IapClient.PriceType.IN_APP_CONSUMABLE -> "Consumable"
+                IapClient.PriceType.IN_APP_NONCONSUMABLE -> "Non-consumable"
+                else -> "undefined"
+            }
         }
     }
 

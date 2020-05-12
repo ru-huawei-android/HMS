@@ -57,6 +57,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.4"
 
     // для использования In-App-Purchase необходимо предварительно настроить Merchant Account Service,
     // заполнив данные о банковском аккаунте и согласие на обработку персональных данных
