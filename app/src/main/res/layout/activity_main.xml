@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     tools:context=".MainActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:itemCount="3"
+        tools:listitem="@layout/recycler_view_item" />
+
     <TextView
-        android:id="@+id/btnForceCrash"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableTop="@mipmap/ic_launcher"
-        android:text="@string/force_a_crash"
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_gravity="center"
-        />
-
-<!--    <com.huawei.hms.maps.MapView-->
-<!--        android:visibility="gone"-->
-<!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
-<!--        android:id="@+id/mapView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        map:cameraTargetLat="48"-->
-<!--        map:cameraTargetLng="2"-->
-<!--        map:cameraZoom="11"-->
-<!--        map:mapType="satellite"-->
-<!--        map:uiCompass="false"-->
-<!--        map:uiZoomControls="true"-->
-<!--        map:zOrderOnTop="false"/>-->
-
-<!--    <TextView-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:id="@+id/zoomPlus"-->
-<!--        android:layout_width="30dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_gravity="center_vertical|end"-->
-<!--        android:background="@android:color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:text="+"/>-->
-
-</FrameLayout>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Subscriptions"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
