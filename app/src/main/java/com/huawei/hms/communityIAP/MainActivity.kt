@@ -37,10 +37,7 @@ import com.huawei.hms.iap.IapApiException
 import com.huawei.hms.iap.IapClient
 import com.huawei.hms.iap.entity.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -63,25 +60,30 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onStart() {
         super.onStart()
-        print("onStart")
+        Log.d(TAG, "onStart")
     }
 
+    /**
+     Обновляем список товаров и подписок
+     */
     private fun initControls() {
+        val deferred = listOf(
+                Pair(IapClient.PriceType.IN_APP_CONSUMABLE, listOf(BEGINNER_PACK, SKILLED_PACK)),
+                Pair(IapClient.PriceType.IN_APP_SUBSCRIPTION, listOf(MONTHLY_PRO, SEASON_PRO, ANNUAL_PRO)),
+                Pair(IapClient.PriceType.IN_APP_NONCONSUMABLE, listOf(SEED, SOIL_PIECE))
+        ).map { pair ->
+            GlobalScope.async {
+                Log.d(TAG, "${pair.first} load started")
+                loadProducts(
+                        pair.first,
+                        pair.second).also { Log.d(TAG, "${pair.first} load finished") }
+            }
+        }
         GlobalScope.launch {
-            val nonConsums =
-                    loadProducts(
-                            IapClient.PriceType.IN_APP_CONSUMABLE,
-                            listOf(BEGINNER_PACK, SKILLED_PACK))
-            val subs = loadProducts(
-                    IapClient.PriceType.IN_APP_SUBSCRIPTION,
-                    listOf(MONTHLY_PRO, SEASON_PRO, ANNUAL_PRO)
-            )
-            val consums =
-                    loadProducts(
-                            IapClient.PriceType.IN_APP_NONCONSUMABLE,
-                            listOf(SEED, SOIL_PIECE))
             withContext(Dispatchers.Main) {
-                showProduct(consums + nonConsums + subs)
+                val results = deferred.map { it.await() }.flatten()
+                Log.d(TAG, "show products")
+                showProduct(results)
             }
         }
     }
@@ -100,13 +102,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         )
                         .also {
                             it.addOnSuccessListener { result ->
-                                if (result?.productInfoList?.isNotEmpty() == true) {
-                                    continuation.resume(result.productInfoList)
-                                } else {
-                                    continuation.resume(emptyList())
-                                }
+                                continuation.resume(result?.productInfoList.orEmpty())
                             }.addOnFailureListener { e ->
-                                Log.e(TAG, "Load products error! Check product keys and public IAP key has been set correctly")
+                                Log.e(TAG, "Load products error: $e!")
                                 Toast.makeText(this, "Load products error", Toast.LENGTH_SHORT).show()
                                 continuation.resume(emptyList())
                             }
