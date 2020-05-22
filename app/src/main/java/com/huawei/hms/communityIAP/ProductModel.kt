@@ -16,8 +16,6 @@
 
 package com.huawei.hms.communityIAP
 
-import com.huawei.hms.iap.IapClient
-
 data class ProductModel(val title: String,
                         val description: String,
                         val price: String,

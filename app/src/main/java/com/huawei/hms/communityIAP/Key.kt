@@ -31,6 +31,7 @@ object Key {
     const val MONTHLY_PRO = "monthly_pro"
     const val SEASON_PRO = "seasonal_pro"
     const val ANNUAL_PRO = "annual_pro"
+
     const val PLATINUM_VER = "platinum_version"
 
     // consumable

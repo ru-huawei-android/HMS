@@ -80,11 +80,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.Main) {
                 val results = deferred.map { it.await() }.flatten()
                 Log.d(TAG, "show products")
                 showProduct(results)
-            }
         }
     }
 
