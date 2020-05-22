@@ -72,14 +72,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 Pair(IapClient.PriceType.IN_APP_SUBSCRIPTION, listOf(MONTHLY_PRO, SEASON_PRO, ANNUAL_PRO)),
                 Pair(IapClient.PriceType.IN_APP_NONCONSUMABLE, listOf(SEED, SOIL_PIECE))
         ).map { pair ->
-            GlobalScope.async {
+            CoroutineScope(Dispatchers.IO).async {
                 Log.d(TAG, "${pair.first} load started")
                 loadProducts(
                         pair.first,
                         pair.second).also { Log.d(TAG, "${pair.first} load finished") }
             }
         }
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.Main) {
                 val results = deferred.map { it.await() }.flatten()
                 Log.d(TAG, "show products")
