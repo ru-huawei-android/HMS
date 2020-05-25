@@ -1,133 +1,76 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+//Huawei plugin
+apply plugin: 'com.huawei.agconnect'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
+
     defaultConfig {
-        applicationId "com.huawei.hms.sample2"
-        minSdkVersion 22
+        applicationId "com.huawei.agc.clouddb.myquickstart"
+        minSdkVersion 28
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     signingConfigs {
         release {
-            storeFile file("huaweisamplekey.store")
-            storePassword "huawei"
-            keyAlias "huaweisample"
-            keyPassword "huawei"
+            storeFile file('CloudDBQuickStart.jks')
+            keyAlias 'CloudDBQuickStart'
+            keyPassword 'password'
+            storePassword 'password'
             v1SigningEnabled true
             v2SigningEnabled true
         }
     }
+
     buildTypes {
         release {
-            debuggable true
-            minifyEnabled false
-            proguardFile 'proguard-project.txt'
             signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig signingConfigs.release
+            debuggable true
         }
     }
+
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
-    // Нужно добавить SHA256 сертификата которым вы подписываете приложение в вашем Web-интерфейсе
-    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-appGallery-connect
-
-    // Не забудьте включить соответствующие Kits в вашем Web-интерфейсе
-    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/service/hms/catalog/AGCHelp.html?page=AGC_appGalleryConnect_associated_service
-    // После включения Kits и добавления SHA256, скачайте agconnect-services.json и положите его в проект
-
-    // Если Android studio не видит ваше Huawei устройство - переключите его в режим соединения MTP (передача файлов)
-    implementation "androidx.core:core-ktx:1.2.0"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // Huawei AppGallery -> Мои приложения -> Приложение -> Анализ (справа вверху) -> Расширенная аналитика
-    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/Development-Guide#h1-1-development-procedure
-    // Аналитика не отображает bundle событий пока вы не добавите их и их параметры в Мета-менеджмент -> Мероприятие
+    //Huawei dependencies
+    implementation 'com.huawei.agconnect:agconnect-database:1.2.1.301'
+    implementation 'com.huawei.agconnect:agconnect-auth:1.3.1.300'
+    //implementation 'com.huawei.agconnect:agconnect-auth:1.2.0.300'
+    implementation 'com.huawei.hms:hwid:4.0.1.300'
 
-    // О том как настраивать funnels и лимиты на них можно прочитать
-    // по этой ссылке: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/3021002#h1-1577945554860
-
-    // Если вы хотите включить debug mode, где с задержкой менее минуты отображаются все события с их параметрами, то
-    // Подробный гайд здесь:  https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/Development-Guide#h2-6-2-access-debugging
-    // В debug mode события не попадают во вкладку "Анализ в реальном времени"
-
-    // API Reference: https://developer.huawei.com/consumer/en/doc/development/HMS-References/3021004
-    // FAQ: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/3021005
-    // Changelog: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/08350981
-    // Основные причины "почему не работает" описаны в FAQ, пункт номер 3
-    implementation 'com.huawei.hms:hianalytics:4.0.0.300'
-
-    // Если у вас уже интегрирован другой сервис перехвата crash (например YandexMetrica), то вероятнее всего будет работать только один из них
-    // График крэшей в Web-интерфейсе отрисовывается с запозданием где-то в 5-10 минут, можно найти здесь:
-    // Huawei AppGallery -> Мои приложения -> Приложение -> Разработка -> Качество (внизу) -> Crash
-    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-crash-getstarted
-    implementation 'com.huawei.agconnect:agconnect-crash:1.2.1.300'
-
-    // Если вы используете proguard, правила можно скопировать из файла proguard-project.txt
-
-
-    // . . . . . . . . . . . . . . . . . . . . . . . .
-    // Размер самого kit / размер с зависимостями:
-    // Account Kit 168 KB / 616 KB
-    // Awareness Kit 158 KB / 581 KB
-    // Health Kit 269 KB / 684 KB
-    // Panorama Kit (panorama + panorama-local)  28 KB + 42 KB / 713 KB
-    // DTM 270 KB / 851 KB
-    // Site Kit 31 KB / 1578 KB
-    // Near By 138 KB / 714 KB
-    // ML Kit 835 KB / 323 KB?
-    // Identity Kit 9 KB / 538 KB
-    // FIDO Kit 53 KB / 833 KB
-    // Push Kit 111 KB / 631 KB
-    // In-App Purchases 66 KB / 604 KB
-    // Game Service 622 KB / 1467 KB
-    // Location Kit 91 KB / 625 KB
-    // Analytics Kit 119 KB / 961 KB
-    // Ads Kit (identifier) 6 KB / 93 KB
-    // Map Kit (maps + maps-base) 420 KB / 823 KB
-    // Drive Kit 587 KB / 868 KB
-    // Safe Detect Kit 16 KB / 703 KB
-    // Scan Kit 74 KB / 243 KB
-    // Wallet Kit 24 KB / 841 KB
-
-//    implementation 'com.huawei.hms:hwid:4.0.0.300'
-//    implementation 'com.huawei.hms:awareness:1.0.1.300'
-//    implementation 'com.huawei.hms:hihealth-base:4.0.0.350'
-//    implementation 'com.huawei.hms:panorama:4.0.1.300'
-//    implementation 'com.huawei.hms:panorama-local:4.0.1.300'
-//    implementation 'com.huawei.hms:hianalytics:4.0.0.300'
-//    implementation 'com.huawei.hms:dtm-api:4.0.1.300'
-//    implementation 'com.huawei.hms:site:4.0.0.300'
-//    implementation 'com.huawei.hms:nearby:4.0.1.300'
-//    implementation 'com.huawei.hms:ml-computer-vision:1.0.0.325'
-//    implementation 'com.huawei.hms:identity:4.0.1.300'
-//    implementation 'com.huawei.hms:fido:4.0.0.300'
-//    implementation 'com.huawei.hms:push:3.0.3.301'
-//    implementation 'com.huawei.hms:iap:3.0.3.300'
-//    implementation 'com.huawei.hms:game:3.0.3.300'
-//    implementation 'com.huawei.hms:location:3.0.3.300'
-//    implementation 'com.huawei.hms:hms-ads-identifier:3.4.26.303'
-//    implementation 'com.huawei.hms:maps:3.0.2.301'
-//    implementation 'com.huawei.hms:drive:4.0.0.301'
-//    implementation 'com.huawei.hms:push:4.0.0.300'
-//    implementation 'com.huawei.hms:safetydetect:3.0.3.300'
-//    implementation 'com.huawei.hms:scan:1.0.3.301'
-//    implementation 'com.huawei.hms:wallet:2.0.0.300'
-
+    //for my sample
+    def supportVersion = '28.0.0'
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
-
-apply plugin: 'com.huawei.agconnect'

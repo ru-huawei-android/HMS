@@ -1,2 +1,2 @@
+rootProject.name='CloudDB Quick Start'
 include ':app'
-rootProject.name='HUAWEIHMSSampleProject'

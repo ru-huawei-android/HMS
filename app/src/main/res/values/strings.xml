@@ -1,5 +1,17 @@
 <resources>
-    <string name="app_name">HUAWEIHMSSampleProject</string>
-
-    <string name="force_a_crash">force a crash</string>
+    <string name="app_name">CloudDB Quick Start</string>
+    <string name="main_title">Enter title</string>
+    <string name="main_desc">Enter description</string>
+    <string name="main_save">Save</string>
+    <string name="main_login">Login HuaweiID</string>
+    <string name="main_logout">Logout huaweiid</string>
+    <string name="book_manager_title">My CloudDB DEMO</string>
+    <string name="login">LogIn</string>
+    <string name="logout">LogOut</string>
+    <string name="an_error_occurred_while_loading_data">An error occurred while loading data.</string>
+    <string name="getAll">get all data</string>
+    <string name="enter_item">Enter Item</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
 </resources>

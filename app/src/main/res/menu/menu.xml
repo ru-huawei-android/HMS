@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_login_button"
+        android:visible="true"
+        app:showAsAction="ifRoom"
+        android:title="@string/login" />
+
+    <item
+        android:id="@+id/menu_logout_button"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        android:title="@string/logout" />
+
+    <item
+        android:id="@+id/menu_add_button"
+        android:icon="@android:drawable/ic_menu_add"
+        android:visible="true"
+        app:showAsAction="ifRoom"
+        android:title="Add" />
+
+</menu>
