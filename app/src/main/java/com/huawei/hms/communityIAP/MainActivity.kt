@@ -23,21 +23,20 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.huawei.hms.communityIAP.Key.ANNUAL_PRO
-import com.huawei.hms.communityIAP.Key.BEGINNER_PACK
-import com.huawei.hms.communityIAP.Key.MONTHLY_PRO
 import com.huawei.hms.communityIAP.Key.REQ_CODE_BUY
 import com.huawei.hms.communityIAP.Key.REQ_CODE_LOGIN
-import com.huawei.hms.communityIAP.Key.SEASON_PRO
-import com.huawei.hms.communityIAP.Key.SEED
-import com.huawei.hms.communityIAP.Key.SKILLED_PACK
-import com.huawei.hms.communityIAP.Key.SOIL_PIECE
+import com.huawei.hms.communityIAP.Key.consumables
+import com.huawei.hms.communityIAP.Key.nonConsumables
+import com.huawei.hms.communityIAP.Key.subscriptions
 import com.huawei.hms.iap.Iap
 import com.huawei.hms.iap.IapApiException
 import com.huawei.hms.iap.IapClient
 import com.huawei.hms.iap.entity.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -64,13 +63,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     /**
-     Обновляем список товаров и подписок
+    Обновляем список товаров и подписок
      */
     private fun initControls() {
-        val deferred = listOf(
-                Pair(IapClient.PriceType.IN_APP_CONSUMABLE, listOf(BEGINNER_PACK, SKILLED_PACK)),
-                Pair(IapClient.PriceType.IN_APP_SUBSCRIPTION, listOf(MONTHLY_PRO, SEASON_PRO, ANNUAL_PRO)),
-                Pair(IapClient.PriceType.IN_APP_NONCONSUMABLE, listOf(SEED, SOIL_PIECE))
+        val deferredProducts = listOf(
+                Pair(IapClient.PriceType.IN_APP_CONSUMABLE, consumables),
+                Pair(IapClient.PriceType.IN_APP_SUBSCRIPTION, subscriptions),
+                Pair(IapClient.PriceType.IN_APP_NONCONSUMABLE, nonConsumables)
         ).map { pair ->
             CoroutineScope(Dispatchers.IO).async {
                 Log.d(TAG, "${pair.first} load started")
@@ -79,10 +78,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         pair.second).also { Log.d(TAG, "${pair.first} load finished") }
             }
         }
+        val deferredPurchases = listOf(
+                IapClient.PriceType.IN_APP_CONSUMABLE,
+                IapClient.PriceType.IN_APP_SUBSCRIPTION,
+                IapClient.PriceType.IN_APP_NONCONSUMABLE
+        ).map { type ->
+            CoroutineScope(Dispatchers.IO).async {
+                Log.d(TAG, "Product type $type purchase load started")
+                queryPurchases(type).also { Log.d(TAG, "Purchases for type $type load finished") }
+            }
+        }
         CoroutineScope(Dispatchers.Main).launch {
-                val results = deferred.map { it.await() }.flatten()
-                Log.d(TAG, "show products")
-                showProduct(results)
+            val results = deferredProducts.map { it.await() }.flatten()
+            val purchased = deferredPurchases.map { it.await() }
+            // todo show purchased status
+            Log.d(TAG, "show products")
+            showProduct(results)
         }
     }
 
@@ -109,10 +120,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         }
             }
 
+    // загружаем продукты в список
     private fun showProduct(list: List<ProductInfo>) {
         products.clear()
         products.addAll(list.map {
-            ProductModel(it.productName, it.productDesc, it.price, it.productId, it.priceType)
+            ProductModel(it.productName, it.productDesc, it.price, it.productId, it.priceType, false)
         } as ArrayList<ProductModel>)
         recyclerView.adapter?.notifyDataSetChanged()
     }
@@ -126,7 +138,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         Log.i(TAG, "call createPurchaseIntent")
         Iap.getIapClient(this)
                 .createPurchaseIntent(
-                        PurchaseIntentReq().apply { this.productId = productId; priceType = type }
+                        PurchaseIntentReq().apply { this.productId = productId; priceType = type; developerPayload = "$productId payload" }
                 )
                 .addOnSuccessListener { result ->
                     Log.i(TAG, "createPurchaseIntent, onSuccess")
@@ -176,8 +188,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                             Key.publicKey
                     ).also {
                         Toast.makeText(this,
-                                "Pay successful${if (it) ", sign failed" else ""}",
+                                "Pay successful${if (!it) ", sign failed" else ""}",
                                 Toast.LENGTH_SHORT).show()
+                        if (it) consumePurchase(purchaseResultInfo.inAppPurchaseData)
                     }
                 }
                 OrderStatusCode.ORDER_STATE_CANCEL -> {
@@ -197,6 +210,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 val returnCode: Int = data.getIntExtra("returnCode", 1)
                 if (returnCode == 0) initControls()
             }
+        }
+    }
+
+    private fun consumePurchase(purchaseData: String) {
+        val responseObj = InAppPurchaseData(purchaseData)
+        // подписки не требуют потребления
+        if (subscriptions.contains(responseObj.productId)) return
+        responseObj.let {
+            Iap.getIapClient(this)
+                    .consumeOwnedPurchase(
+                            ConsumeOwnedPurchaseReq().apply {
+                                purchaseToken = responseObj.purchaseToken
+                                developerChallenge = "consume product"
+                            }
+                    ).addOnSuccessListener {
+                        Log.i(TAG, "Successfully delivered")
+                    }.addOnFailureListener {
+                        Log.e(TAG, "Deliver failure")
+                    }
         }
     }
 
@@ -244,6 +276,35 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     Log.e(TAG, "isSandboxActivated call fail: ${e.message}")
                     isSandbox = false
                 }
+    }
+
+
+    // запрашиваем предыдущие покупки
+    private suspend fun queryPurchases(reqPriceType: Int) {
+        suspendCoroutine<List<String>> { continuation ->
+            Iap.getIapClient(this)
+                    .obtainOwnedPurchases(
+                            OwnedPurchasesReq().apply {
+                                continuationToken = null
+                                priceType = reqPriceType
+                            }
+                    ).addOnSuccessListener { result ->
+                        if (result.inAppPurchaseDataList != null) {
+                            val inAppPurchaseDataList = result.inAppPurchaseDataList
+                            val inAppSignature = result.inAppSignature // todo check signature
+                            continuation.resume(
+                                    inAppPurchaseDataList.map {
+                                        consumePurchase(it)
+                                        InAppPurchaseData(it).productId
+                                    }
+                            )
+                        }
+                    }.addOnFailureListener { e ->
+                        Log.e(TAG, "obtainOwnedPurchases, type=$reqPriceType, ${e.message}")
+                        continuation.resume(emptyList())
+                    }
+        }
+
     }
 
 

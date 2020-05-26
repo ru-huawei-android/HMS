@@ -20,4 +20,5 @@ data class ProductModel(val title: String,
                         val description: String,
                         val price: String,
                         val productId: String,
-                        val type: Int)
+                        val type: Int,
+                        val isPurchased: Boolean)

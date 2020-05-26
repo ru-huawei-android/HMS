@@ -28,17 +28,18 @@ object Key {
     // Коды продуктов, сконфигурированных в консоли разработчика
 
     // подписки
-    const val MONTHLY_PRO = "monthly_pro"
-    const val SEASON_PRO = "seasonal_pro"
-    const val ANNUAL_PRO = "annual_pro"
-
-    const val PLATINUM_VER = "platinum_version"
+    const val MONTHLY_PRO = "monthly_pro_id"
+    const val SEASON_PRO = "seasonal_pro_id"
+    const val ANNUAL_PRO = "annual_pro_id"
+    val subscriptions = listOf(MONTHLY_PRO, SEASON_PRO, ANNUAL_PRO)
 
     // consumable
-    const val SEED = "seed"
-    const val SOIL_PIECE = "soil_piece"
+    const val SEED = "seed_id"
+    const val SOIL_PIECE = "soil_piece_id"
+    val consumables = listOf(SEED, SOIL_PIECE)
 
     // non-consumable
-    const val BEGINNER_PACK = "beginner_pack"
-    const val SKILLED_PACK = "skilled_pack"
+    const val BEGINNER_PACK = "beginner_pack_id"
+    const val SKILLED_PACK = "skilled_pack_id"
+    val nonConsumables = listOf(BEGINNER_PACK, SKILLED_PACK)
 }

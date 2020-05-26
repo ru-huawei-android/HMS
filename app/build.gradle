@@ -10,8 +10,8 @@ android {
         applicationId "com.huawei.hms.iapcommunitydemo"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "IAPKEY", getIAPKey()
     }
@@ -67,6 +67,8 @@ dependencies {
     // Затем необходимо создать продукты с идентификаторами, описанными в файле Keys
     // описание здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-product-information-v4
     implementation 'com.huawei.hms:iap:4.0.2.300'
+
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // Если вы используете proguard, правила можно скопировать из файла proguard-project.txt
 
