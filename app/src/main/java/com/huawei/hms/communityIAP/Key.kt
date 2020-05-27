@@ -18,7 +18,7 @@ package com.huawei.hms.communityIAP
 
 object Key {
     // !!! в реальном приложении ключ не хранить в открытом виде !!!
-    const val publicKey = BuildConfig.IAPKEY // здесь нужен ключ , полученный после включения IAP
+    const val publicKey = BuildConfig.IAPKEY // здесь нужен публичный ключ , полученный после включения IAP
     //(Мои приложения->[Имя приложения]->Разработка->In-App Purchases)
 
     // Коды запросов

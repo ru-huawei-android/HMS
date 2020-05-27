@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.huawei.hms.communityIAP.Key.REQ_CODE_BUY
 import com.huawei.hms.communityIAP.Key.REQ_CODE_LOGIN
@@ -55,6 +56,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         checkSandboxing()
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = RecyclerViewAdapter(products, ::gotoPay)
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context,
+                DividerItemDecoration.VERTICAL))
     }
 
     override fun onStart() {
