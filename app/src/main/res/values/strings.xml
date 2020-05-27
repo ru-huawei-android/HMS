@@ -1,5 +1,81 @@
 <resources>
     <string name="app_name">HUAWEIHMSSampleProject</string>
 
-    <string name="force_a_crash">force a crash</string>
+    <string name="owner">HUAWEI Developer</string>
+    <string name="copyright_info">Copyright 2020. Huawei Technologies Co., Ltd</string>
+    <string name="status_ad_loading">Ad loading state: being loaded.</string>
+    <string name="status_load_ad_success">Ad loading state: loaded successfully.</string>
+    <string name="status_load_ad_fail">Ad loading state: failed to be loaded. Error code: </string>
+    <string name="status_ad_dismissed">Ad is dismissed.</string>
+    <string name="load_button_text">Load Ad</string>
+
+    <!-- Banner activity -->
+    <string name="size_160_600">SIZE_160*600</string>
+    <string name="size_320_50">SIZE_320*50</string>
+    <string name="size_320_100">SIZE_320*100</string>
+    <string name="size_smart">SIZE_SMART</string>
+    <string name="size_dynamic">SIZE_DYNAMIC</string>
+    <string name="size_300_250">SIZE_300*250</string>
+    <string name="size_360_57">SIZE_360*57</string>
+    <string name="size_360_144">SIZE_360*144</string>
+    <string name="size_468_60">SIZE_468*60</string>
+    <string name="size_728_90">SIZE_728*90</string>
+    <string name="color_black">Black</string>
+    <string name="color_white">White</string>
+    <string name="color_red">Red</string>
+    <string name="color_transparent">Transparent</string>
+    <string name="banner_size_label">Size:</string>
+    <string name="banner_color_label">Color:</string>
+
+    <!-- Native activity -->
+    <string name="ad_flag">Ad</string>
+    <string name="display_form">Display form:</string>
+    <string name="large">Large image with text.</string>
+    <string name="small">Small image with text.</string>
+    <string name="video">Video with text.</string>
+    <string name="status_play_start">Video playback state: starting to be played.</string>
+    <string name="status_playing">Video playback state: being played.</string>
+    <string name="status_play_end">Video playback state: playback completed.</string>
+    <string name="ad_is_closed">Ad is closed.</string>
+
+    <!-- Interstitial activity   -->
+    <string name="load_button">Load Ad</string>
+    <string name="interstitial_display_picture">Image</string>
+    <string name="interstitial_display_video">Video</string>
+
+    <!-- Reward activity   -->
+    <string name="get_reward_brn">Get reward</string>
+    <string name="logo">logo</string>
+    <string name="ad_kit_sample">Ad kit sample</string>
+
+    <!-- Consent -->
+    <string name="consent_title">Consent Example of HUAWEI X</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="dialog_close">Close</string>
+    <string name="action_remove_ads">Do Not Load Ads</string>
+    <string name="consent_init_text">The Ads in HUAWEI X is provided in collaboration with our advertising partners. To provide this service, we need to share certain information about you with these partners, including your city-level location as well as your usage records for the news service.\n\n
+    For more information about our partners and how your data is processed, please touch here.\n\n
+    By touching AGREE, you indicate that you agree to share the above personal information with our partners so that they can provide you with personalized advertisements on behalf of their customers, based on interests and preferences identified or predicted through analysis of your personal information.
+                                       \n\nYou can withdraw your consent at any time by going to [app settings].
+                                       \n\nIf you touch SKIP, your data will not be shared with our partners and you will not [ ].</string>
+    <integer name="init_here_start">347</integer>
+    <integer name="init_here_end">351</integer>
+    <string name="consent_more_info_text">The Ads in HUAWEI X is provided in collaboration with our partners. You can find a full list of our partners for each country/region here.\n\n
+    In order to provide you with personalized advertisements, we need to share the following information with our partners:\n\n
+    •	User information, including advertising ID, city of residence, country, and language.\n\n
+    •	Device information, including device name and model, operating system version, screen size, and network type.\n\n
+    •	Service usage information, including news ID and records of views, clicks, dislikes, shares, and comments for news content and advertisements.\n\n
+    With your consent, the above information will be shared with our partners so that they can provide you with personalized advertisements on behalf of their customers, based on interests and preferences identified or predicted through analysis of your personal information.\n\n
+    You can withdraw your consent at any time by going to app settings.\n\n
+    Without your consent, no data will be shared with our partners and you will not [ ].</string>
+    <integer name="more_info_here_start">133</integer>
+    <integer name="more_info_here_end">137</integer>
+    <string name="mediation_partners"> You can find a full list of our partners for each country/region here:\n\n</string>
+    <string name="consent_back">Back</string>
+    <string name="consent_yes">Agree</string>
+    <string name="consent_skip">Skip</string>
+    <string name="consent_change_setting">You can change this setting anytime in the app.</string>
+    <string name="thank_you">Thank you!</string>
+    <string name="Consent_text">This is a Consent Example</string>
+
 </resources>

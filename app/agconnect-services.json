@@ -4,23 +4,13 @@
 		"url":"connect-drru.hispace.hicloud.com"
 	},
 	"client":{
-		"cp_id":"890007000000001595",
-		"product_id":"9105385871708398540",
-		"client_id":"273356671219139648",
-		"client_secret":"264801BDE1D33A3CB437E296712E44415C5ED3A1C09B90DC9A856851A2CC1635",
-		"app_id":"101611999",
-		"package_name":"com.huawei.hms.sample2",
-		"api_key":"CV5UmsPbrVlBSmIvQiMxTsGGk9Y5HSXRGbJ3JbwvmTb3BIC9e5FFoixNRQErpCyBjjDsA8jl6wRcLpHilVfV8DVVwSDR"
-	},
-	"service":{
-		"analytics":{
-			"collector_url":"datacollector-drru.dt.hicloud.com,datacollector-drru.dt.dbankcloud.cn",
-			"resource_id":"p1",
-			"channel_id":""
-		},
-		"ml":{
-			"mlservice_url":"ml-api-drru.ai.dbankcloud.com,ml-api-drru.ai.dbankcloud.cn"
-		}
+		"cp_id":"1340007000005392358",
+		"product_id":"736430079244462884",
+		"client_id":"366748507945567232",
+		"client_secret":"6743A30A5929F23484E520198748ADBCE518EB63ACE0038A06F39D35874BC498",
+		"app_id":"102250573",
+		"package_name":"com.huawei.hms.ads",
+		"api_key":"CV7s5qysU0UpRMLryLt+xDTXh+SJmhWUkI2XRNM4SE20Kw82ELjkaY8N2LWoMTV3A6orLUJftEDyMlkAelMGnyiN2hVU"
 	},
 	"region":"RU",
 	"configuration_version":"1.0"

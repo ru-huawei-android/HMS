@@ -3,4 +3,6 @@
     <color name="colorPrimary">#ED1C24</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#ED1C24</color>
+
+    <color name="dialog_title">#e6000000</color>
 </resources>
