@@ -1,4 +1,6 @@
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
+
+import com.huawei.hms.ads.AdParam
 
 class Utils {
     companion object {

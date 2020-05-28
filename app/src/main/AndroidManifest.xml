@@ -12,7 +12,7 @@
     <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
 
     <application
-        android:name="com.huawei.hms.ads.AdsApplication"
+        android:name="com.huawei.hms.ads6.AdsApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,7 +22,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.huawei.hms.ads6.SplashActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -30,12 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BannerActivity" />
-        <activity android:name=".NativeActivity" />
-        <activity android:name=".RewardActivity" />
-        <activity android:name=".InterstitialActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ConsentActivity" />
+        <activity android:name="com.huawei.hms.ads6.BannerActivity" />
+        <activity android:name="com.huawei.hms.ads6.NativeActivity" />
+        <activity android:name="com.huawei.hms.ads6.RewardActivity" />
+        <activity android:name="com.huawei.hms.ads6.InterstitialActivity" />
+        <activity android:name="com.huawei.hms.ads6.MainActivity" />
+        <activity android:name="com.huawei.hms.ads6.ConsentActivity" />
 
         <meta-data
             android:name="com.huawei.hms.client.appid"

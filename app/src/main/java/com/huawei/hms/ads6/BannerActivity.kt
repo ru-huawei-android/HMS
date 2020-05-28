@@ -14,14 +14,18 @@
    limitations under the License.
 */
 
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.huawei.hms.ads.AdListener
+import com.huawei.hms.ads.AdParam
 import com.huawei.hms.ads.AdParam.ErrorCode.*
+import com.huawei.hms.ads.BannerAdSize
+import com.huawei.hms.ads.R
 import com.huawei.hms.ads.banner.BannerView
 import kotlinx.android.synthetic.main.activity_banner.*
 import timber.log.Timber
@@ -87,7 +91,8 @@ class BannerActivity : AppCompatActivity(R.layout.activity_banner) {
 
         override fun onAdFailed(errorCode: Int) {
             Timber.d("onAdFailed %s", errorCode)
-            Toast.makeText(applicationContext, Utils.getErrorMessage(errorCode), Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext,
+                Utils.getErrorMessage(errorCode), Toast.LENGTH_LONG).show()
         }
 
         override fun onAdOpened() {

@@ -1,4 +1,4 @@
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.huawei.hms.ads.AdParam
+import com.huawei.hms.ads.AudioFocusType
+import com.huawei.hms.ads.R
 import com.huawei.hms.ads.splash.SplashAdDisplayListener
 import com.huawei.hms.ads.splash.SplashView.SplashAdLoadListener
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -32,7 +35,8 @@ class SplashActivity: AppCompatActivity(R.layout.activity_splash) {
         splashAdView.setLogoResId(R.mipmap.ic_launcher)
         splashAdView.setMediaNameResId(R.string.app_name)
         splashAdView.setAudioFocusType(AudioFocusType.NOT_GAIN_AUDIO_FOCUS_WHEN_MUTE)
-        splashAdView.load(getString(R.string.ad_splash), ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, AdParam.Builder().build(), splashAdLoadListener)
+        splashAdView.load(getString(R.string.ad_splash), ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, AdParam.Builder()
+            .build(), splashAdLoadListener)
         timeoutHandler.removeMessages(MSG_AD_TIMEOUT)
         timeoutHandler.sendEmptyMessageDelayed(MSG_AD_TIMEOUT, AD_TIMEOUT.toLong())
     }

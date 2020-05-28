@@ -1,4 +1,4 @@
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
 
 const val SP_NAME = "HuaweiAdsSdkSharedPreferences"
 const val SP_PROTOCOL_KEY = "protocol"

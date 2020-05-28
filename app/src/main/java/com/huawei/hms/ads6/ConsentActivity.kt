@@ -1,8 +1,9 @@
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.huawei.hms.ads.R
 import com.huawei.hms.ads.consent.bean.AdProvider
 import com.huawei.hms.ads.consent.constant.ConsentStatus
 import com.huawei.hms.ads.consent.constant.DebugNeedConsent
@@ -10,7 +11,8 @@ import com.huawei.hms.ads.consent.inter.Consent
 import com.huawei.hms.ads.consent.inter.ConsentUpdateListener
 import timber.log.Timber
 
-class ConsentActivity : AppCompatActivity(R.layout.activity_consent), ConsentDialog.ConsentDialogCallback {
+class ConsentActivity : AppCompatActivity(R.layout.activity_consent),
+    ConsentDialog.ConsentDialogCallback {
 
 
     private var providers: MutableList<AdProvider> = mutableListOf()

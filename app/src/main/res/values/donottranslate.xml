@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ad_banner">testw6vs28auh3</string>
+    <!-- В консоли можно задать один ID для всех подвидов полноэкранной рекламы -->
     <string name="ad_interestial_img">teste9ih9j0rc3</string>
     <string name="ad_interestial_vid">testb4znbuh3n2</string>
+    <!-- В консоли можно задать один ID для всех подвидов нативной рекламы -->
     <string name="ad_native_large">testb4znbuh3n2</string>
     <string name="ad_native_small">testb65czjivt9</string>
     <string name="ad_native_video">testy63txaom86</string>
-    <string name="ad_rewarded">testx9dtjwj8hp</string>
+    <!-- Id у вертикальной рекламы с наградой отличается от Id горизонтальной рекламы -->
+    <string name="ad_rewarded_vertical">testx9dtjwj8hp</string>
     <string name="ad_splash">testq6zq98hecj</string>
 </resources>

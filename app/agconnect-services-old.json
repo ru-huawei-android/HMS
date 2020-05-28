@@ -1,0 +1,17 @@
+{
+	"agcgw":{
+		"backurl":"connect-drru.dbankcloud.cn",
+		"url":"connect-drru.hispace.hicloud.com"
+	},
+	"client":{
+		"cp_id":"1340007000005392358",
+		"product_id":"736430079244462884",
+		"client_id":"366748507945567232",
+		"client_secret":"6743A30A5929F23484E520198748ADBCE518EB63ACE0038A06F39D35874BC498",
+		"app_id":"102250573",
+		"package_name":"com.huawei.hms.ads",
+		"api_key":"CV7s5qysU0UpRMLryLt+xDTXh+SJmhWUkI2XRNM4SE20Kw82ELjkaY8N2LWoMTV3A6orLUJftEDyMlkAelMGnyiN2hVU"
+	},
+	"region":"RU",
+	"configuration_version":"1.0"
+}

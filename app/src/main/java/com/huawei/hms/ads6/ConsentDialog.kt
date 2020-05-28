@@ -1,4 +1,4 @@
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
 
 import android.app.Dialog
 import android.content.Context
@@ -17,11 +17,14 @@ import android.view.Window
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.huawei.hms.ads.R
 import com.huawei.hms.ads.consent.bean.AdProvider
 import com.huawei.hms.ads.consent.constant.ConsentStatus
 import com.huawei.hms.ads.consent.inter.Consent
 
-class ConsentDialog(context: Context, providers: MutableList<AdProvider>): Dialog(context, R.style.dialog) {
+class ConsentDialog(context: Context, providers: MutableList<AdProvider>): Dialog(context,
+    R.style.dialog
+) {
 
     private var mContext: Context? = null
     private var inflater: LayoutInflater? = null

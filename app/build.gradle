@@ -4,10 +4,10 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.huawei.hms.ads"
-        minSdkVersion 22
+        applicationId "com.huawei.hms.ads6"
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -57,32 +57,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
-    // Huawei AppGallery -> Мои приложения -> Приложение -> Анализ (справа вверху) -> Расширенная аналитика
-    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/Development-Guide#h1-1-development-procedure
-    // Аналитика не отображает bundle событий пока вы не добавите их и их параметры в Мета-менеджмент -> Мероприятие
-
-    // О том как настраивать funnels и лимиты на них можно прочитать
-    // по этой ссылке: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/3021002#h1-1577945554860
-
-    // Если вы хотите включить debug mode, где с задержкой менее минуты отображаются все события с их параметрами, то
-    // Подробный гайд здесь:  https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/Development-Guide#h2-6-2-access-debugging
-    // В debug mode события не попадают во вкладку "Анализ в реальном времени"
-
-    // API Reference: https://developer.huawei.com/consumer/en/doc/development/HMS-References/3021004
-    // FAQ: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/3021005
-    // Changelog: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/08350981
-    // Основные причины "почему не работает" описаны в FAQ, пункт номер 3
-    implementation 'com.huawei.hms:hianalytics:4.0.0.300'
-
-    // Если у вас уже интегрирован другой сервис перехвата crash (например YandexMetrica), то вероятнее всего будет работать только один из них
-    // График крэшей в Web-интерфейсе отрисовывается с запозданием где-то в 5-10 минут, можно найти здесь:
-    // Huawei AppGallery -> Мои приложения -> Приложение -> Разработка -> Качество (внизу) -> Crash
-    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-crash-getstarted
-    implementation 'com.huawei.agconnect:agconnect-crash:1.2.1.300'
-
     // Если вы используете proguard, правила можно скопировать из файла proguard-project.txt
-
-
     implementation 'com.huawei.hms:ads-lite:13.4.29.303'
     implementation 'com.huawei.hms:ads-consent:3.4.30.301'
 //    implementation 'com.huawei.hms:ads-identifier:3.4.28.313'

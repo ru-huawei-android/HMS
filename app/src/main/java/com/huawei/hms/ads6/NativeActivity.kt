@@ -1,4 +1,4 @@
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,9 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.huawei.hms.ads.AdListener
+import com.huawei.hms.ads.AdParam
+import com.huawei.hms.ads.R
 import com.huawei.hms.ads.VideoOperator.VideoLifecycleListener
 import com.huawei.hms.ads.nativead.*
 import kotlinx.android.synthetic.main.activity_native.*

@@ -1,8 +1,10 @@
-package com.huawei.hms.ads
+package com.huawei.hms.ads6
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.huawei.hms.ads.AdParam
+import com.huawei.hms.ads.R
 import com.huawei.hms.ads.reward.Reward
 import com.huawei.hms.ads.reward.RewardAd
 import com.huawei.hms.ads.reward.RewardAdLoadListener
@@ -28,7 +30,7 @@ class RewardActivity : AppCompatActivity(R.layout.activity_reward) {
     }
 
     private fun loadRewardAd() {
-        rewardedAd = RewardAd(this, getString(R.string.ad_rewarded))
+        rewardedAd = RewardAd(this, getString(R.string.ad_rewarded_vertical)) //TODO: orientation check
         rewardedAd.loadAd(AdParam.Builder().build(), rewardAdLoadListener)
     }
 
@@ -38,7 +40,8 @@ class RewardActivity : AppCompatActivity(R.layout.activity_reward) {
         }
 
         override fun onRewardAdFailedToShow(errorCode: Int) {
-            Toast.makeText(applicationContext, Utils.getErrorMessage(errorCode), Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext,
+                Utils.getErrorMessage(errorCode), Toast.LENGTH_SHORT).show()
         }
 
         override fun onRewardAdOpened() {
@@ -53,7 +56,8 @@ class RewardActivity : AppCompatActivity(R.layout.activity_reward) {
 
     private val rewardAdLoadListener = object : RewardAdLoadListener() {
         override fun onRewardAdFailedToLoad(errorCode: Int) {
-            Toast.makeText(applicationContext, Utils.getErrorMessage(errorCode), Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext,
+                Utils.getErrorMessage(errorCode), Toast.LENGTH_SHORT).show()
         }
 
         override fun onRewardedLoaded() {
