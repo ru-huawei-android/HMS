@@ -1,45 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/getTokenBtn"
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:text="Get token"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/sendNotificationMessageBtn"
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:onClick="sendTestMessageBtnClicked"
+        android:text="Send Notification Push"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendRawMessageBtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/sendRawMessageBtn"
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:text="SEND RAW PUSH"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getTokenBtn" />
+
+    <Button
+        android:id="@+id/sendDataMessageBtn"
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:text="SEND DATA PUSH"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendNotificationMessageBtn"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/btnForceCrash"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@mipmap/ic_launcher"
-        android:text="@string/force_a_crash"
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_gravity="center"
-        />
-
-<!--    <com.huawei.hms.maps.MapView-->
-<!--        android:visibility="gone"-->
-<!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
-<!--        android:id="@+id/mapView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        map:cameraTargetLat="48"-->
-<!--        map:cameraTargetLng="2"-->
-<!--        map:cameraZoom="11"-->
-<!--        map:mapType="satellite"-->
-<!--        map:uiCompass="false"-->
-<!--        map:uiZoomControls="true"-->
-<!--        map:zOrderOnTop="false"/>-->
-
-<!--    <TextView-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:id="@+id/zoomPlus"-->
-<!--        android:layout_width="30dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_gravity="center_vertical|end"-->
-<!--        android:background="@android:color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:text="+"/>-->
-
-</FrameLayout>
+        android:layout_marginTop="32dp"
+        android:text="Please get push token to be sure it is up to date"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

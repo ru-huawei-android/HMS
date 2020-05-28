@@ -1,10 +1,13 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-android'
-
+apply plugin: 'com.huawei.agconnect'  // HUAWEI agconnect Gradle plugin
 android {
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.huawei.hms.sample2"
         minSdkVersion 22
@@ -25,18 +28,14 @@ android {
     }
     buildTypes {
         release {
-            debuggable true
-            minifyEnabled false
-            proguardFile 'proguard-project.txt'
             signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig signingConfigs.release
+            debuggable true
         }
-    }
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
     }
 }
 
@@ -49,10 +48,24 @@ dependencies {
     // После включения Kits и добавления SHA256, скачайте agconnect-services.json и положите его в проект
 
     // Если Android studio не видит ваше Huawei устройство - переключите его в режим соединения MTP (передача файлов)
-    implementation "androidx.core:core-ktx:1.2.0"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    implementation 'com.alibaba:fastjson:1.1.71.android'
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation "org.apache.commons:commons-lang3:3.9"
+    implementation "com.google.guava:guava:26.0-jre"
+
+    // API Reference: https://developer.huawei.com/consumer/en/doc/development/HMS-References/push-push-pkg
+    // FAQ: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/push-faq-v4
+    // Changelog: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/push-change
+    implementation 'com.huawei.hms:push:4.0.3.301'
+
+    // оригинальную зависимость из примера implementation  "org.apache.httpcomponents:httpclient:4.5.7"
+    // пришлось заменить на пригодную для android из-за конфликта классов
+    // возможно использовать org.apache.httpcomponents, если найти способ ужить ее и библиотеки andorid вместе
+    implementation  "cz.msebera.android:httpclient:4.5.3"
 
     // Huawei AppGallery -> Мои приложения -> Приложение -> Анализ (справа вверху) -> Расширенная аналитика
     // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/Development-Guide#h1-1-development-procedure
@@ -64,18 +77,6 @@ dependencies {
     // Если вы хотите включить debug mode, где с задержкой менее минуты отображаются все события с их параметрами, то
     // Подробный гайд здесь:  https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/Development-Guide#h2-6-2-access-debugging
     // В debug mode события не попадают во вкладку "Анализ в реальном времени"
-
-    // API Reference: https://developer.huawei.com/consumer/en/doc/development/HMS-References/3021004
-    // FAQ: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/3021005
-    // Changelog: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/08350981
-    // Основные причины "почему не работает" описаны в FAQ, пункт номер 3
-    implementation 'com.huawei.hms:hianalytics:4.0.0.300'
-
-    // Если у вас уже интегрирован другой сервис перехвата crash (например YandexMetrica), то вероятнее всего будет работать только один из них
-    // График крэшей в Web-интерфейсе отрисовывается с запозданием где-то в 5-10 минут, можно найти здесь:
-    // Huawei AppGallery -> Мои приложения -> Приложение -> Разработка -> Качество (внизу) -> Crash
-    // Подробный гайд здесь: https://developer.huawei.com/consumer/en/doc/development/AppGallery-connect-Guides/agc-crash-getstarted
-    implementation 'com.huawei.agconnect:agconnect-crash:1.2.1.300'
 
     // Если вы используете proguard, правила можно скопировать из файла proguard-project.txt
 
