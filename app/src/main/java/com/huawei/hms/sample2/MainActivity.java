@@ -30,12 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         Button btnToken = findViewById(R.id.getTokenBtn);
-        Button sendComposedPushBtn = findViewById(R.id.sendNotificationMessageBtn);
+        Button sendNotificationPushBtn = findViewById(R.id.sendNotificationMessageBtn);
         Button sendRawPushBtn = findViewById(R.id.sendRawMessageBtn);
         Button sendDataMessageBtn = findViewById(R.id.sendDataMessageBtn);
 
         btnToken.setOnClickListener(this);
-        sendComposedPushBtn.setOnClickListener(this);
+        sendNotificationPushBtn.setOnClickListener(this);
         sendRawPushBtn.setOnClickListener(this);
         sendDataMessageBtn.setOnClickListener(this);
     }
