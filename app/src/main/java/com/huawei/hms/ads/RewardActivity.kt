@@ -11,8 +11,6 @@ import kotlinx.android.synthetic.main.activity_reward.*
 
 class RewardActivity : AppCompatActivity(R.layout.activity_reward) {
 
-    private val rewardAdId = "testx9dtjwj8hp"
-
     private lateinit var rewardedAd: RewardAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +28,7 @@ class RewardActivity : AppCompatActivity(R.layout.activity_reward) {
     }
 
     private fun loadRewardAd() {
-        rewardedAd = RewardAd(this, rewardAdId)
+        rewardedAd = RewardAd(this, getString(R.string.ad_rewarded))
         rewardedAd.loadAd(AdParam.Builder().build(), rewardAdLoadListener)
     }
 

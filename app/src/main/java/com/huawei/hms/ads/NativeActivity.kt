@@ -12,31 +12,27 @@ import kotlinx.android.synthetic.main.activity_native.*
 
 class NativeActivity : AppCompatActivity(R.layout.activity_native) {
 
-    private val largeAdId = "testu7m3hc4gvm"
-    private val smallAdId = "testb65czjivt9"
-    private val videoAdId = "testy63txaom86"
-
     private var nativeAd: NativeAd? = null
+    private lateinit var loadAd: View.OnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadAdBtn.setOnClickListener(loadAd)
-        loadAdBtn.performClick()
-    }
+        loadAd = View.OnClickListener {
+            // NativeAdConfiguration.Builder используется для настроек рекламы
+            // подробности: https://developer.huawei.com/consumer/en/doc/development/HMS-References/ads-api-nativeadconfiguration-builder
+            val adConfiguration = NativeAdConfiguration.Builder().build()
 
-    private val loadAd = View.OnClickListener {
-        // NativeAdConfiguration.Builder используется для настроек рекламы
-        // подробности: https://developer.huawei.com/consumer/en/doc/development/HMS-References/ads-api-nativeadconfiguration-builder
-        val adConfiguration = NativeAdConfiguration.Builder().build()
-
-        // Создаем Builder в конструктуре которого передаем контекст и id рекламы
-        // Далеее устанавливаем слушателей и настройки созданыне ранее -> загружаем рекламу
-        NativeAdLoader.Builder(this, getAdId())
+            // Создаем Builder в конструктуре которого передаем контекст и id рекламы
+            // Далеее устанавливаем слушателей и настройки созданыне ранее -> загружаем рекламу
+            NativeAdLoader.Builder(this, getAdId())
                 .setNativeAdLoadedListener(nativeAdLoadedListener)
                 .setAdListener(adListener)
                 .setNativeAdOptions(adConfiguration)
                 .build()
                 .loadAd(AdParam.Builder().build())
+        }
+        loadAdBtn.setOnClickListener(loadAd)
+        loadAdBtn.performClick()
     }
 
     private val adListener = object : AdListener() {
@@ -125,9 +121,9 @@ class NativeActivity : AppCompatActivity(R.layout.activity_native) {
     // получаем id рекламы в зависимости от выбранного типа
     private fun getAdId(): String {
         return when (typeRadioGroup.checkedRadioButtonId) {
-            R.id.radio_button_small -> smallAdId
-            R.id.radio_button_large -> largeAdId
-            R.id.radio_button_video -> videoAdId
+            R.id.radio_button_small -> getString(R.string.ad_native_small)
+            R.id.radio_button_large -> getString(R.string.ad_native_large)
+            R.id.radio_button_video -> getString(R.string.ad_native_video)
             else -> ""
         }
     }

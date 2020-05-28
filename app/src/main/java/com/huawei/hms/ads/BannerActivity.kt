@@ -28,31 +28,31 @@ import timber.log.Timber
 
 class BannerActivity : AppCompatActivity(R.layout.activity_banner) {
 
-    val adId = "testw6vs28auh3"
     var bannerView: BannerView? = null
+    private lateinit var loadAd: View.OnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadAd = View.OnClickListener {
+            if (bannerView != null) {
+                adFrame.removeView(bannerView)
+                bannerView?.destroy()
+            }
+
+            // создаем view для баннера и добавляем его на layout
+            bannerView = BannerView(this)
+            adFrame.addView(bannerView);
+            bannerView?.adId = getString(R.string.ad_banner)
+            bannerView?.bannerAdSize = getBannerSize(sizeRadioGroup.checkedRadioButtonId)
+            bannerView?.setBackgroundColor(getColorBackGround(colorRadioGroup.checkedRadioButtonId))
+            bannerView?.adListener = adListener
+            // загружаем рекламу
+            bannerView?.loadAd(AdParam.Builder().build())
+        }
         loadAdBtn.setOnClickListener(loadAd)
         loadAdBtn.performClick()
     }
 
-    private val loadAd = View.OnClickListener {
-        if (bannerView != null) {
-            adFrame.removeView(bannerView)
-            bannerView?.destroy()
-        }
-
-        // создаем view для баннера и добавляем его на layout
-        bannerView = BannerView(this)
-        adFrame.addView(bannerView);
-        bannerView?.adId = adId
-        bannerView?.bannerAdSize = getBannerSize(sizeRadioGroup.checkedRadioButtonId)
-        bannerView?.setBackgroundColor(getColorBackGround(colorRadioGroup.checkedRadioButtonId))
-        bannerView?.adListener = adListener
-        // загружаем рекламу
-        bannerView?.loadAd(AdParam.Builder().build())
-    }
 
     private fun getBannerSize(id: Int): BannerAdSize {
         return when (id) {

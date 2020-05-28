@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity: AppCompatActivity(R.layout.activity_splash) {
 
-    private val adId: String = "testq6zq98hecj"
     private val AD_TIMEOUT = 5000
     private val MSG_AD_TIMEOUT = 1001
     private var hasPaused = false
@@ -33,7 +32,7 @@ class SplashActivity: AppCompatActivity(R.layout.activity_splash) {
         splashAdView.setLogoResId(R.mipmap.ic_launcher)
         splashAdView.setMediaNameResId(R.string.app_name)
         splashAdView.setAudioFocusType(AudioFocusType.NOT_GAIN_AUDIO_FOCUS_WHEN_MUTE)
-        splashAdView.load(adId, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, AdParam.Builder().build(), splashAdLoadListener)
+        splashAdView.load(getString(R.string.ad_splash), ActivityInfo.SCREEN_ORIENTATION_PORTRAIT, AdParam.Builder().build(), splashAdLoadListener)
         timeoutHandler.removeMessages(MSG_AD_TIMEOUT)
         timeoutHandler.sendEmptyMessageDelayed(MSG_AD_TIMEOUT, AD_TIMEOUT.toLong())
     }
