@@ -16,6 +16,7 @@ v4-pushkit-kotlin
 v4-remoteconfig-kotlin
 v4-clouddb-kotlin
 v4-iap-kotlin
+v4-server-pushkit-java
 ```
 [1]: https://github.com/Huawei/Consumer/tree/master/Codelabs
 [2]: https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/account-introduction-v4
