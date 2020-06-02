@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void sendDataPushBtnClicked() {
         try {
-            SendDataMessage pushMsg = new SendDataMessage();
+            SendDataMessage pushMsg = new SendDataMessage(pushToken);
             showSendingResult(pushMsg.sendTransparent());
         } catch (HuaweiMesssagingException ex) {
             Toast.makeText(MainActivity.this, ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();

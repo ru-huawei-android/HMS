@@ -26,9 +26,33 @@ import com.huawei.hms.sample2.model.Urgency;
 import com.huawei.hms.sample2.reponse.SendResponse;
 import com.huawei.hms.sample2.util.InitAppUtils;
 
+import java.util.ResourceBundle;
+
 import static com.huawei.hms.sample2.util.Constants.SENT_OK_CODE;
 
 public class SendDataMessage {
+    private String[] tokenList;
+
+    private String getDefaultToken() {
+        // TODO: test token is taken from test_token in /resources/url.properties file
+        return ResourceBundle.getBundle("url").getString("test_token");
+    }
+
+    public SendDataMessage() {
+        tokenList = new String[] { getDefaultToken() };
+    }
+
+    public SendDataMessage(String token) {
+        if (token == null || token.isEmpty())
+            token = getDefaultToken();
+        tokenList = new String[] { token };
+    }
+
+    public SendDataMessage(String[] tokenList) {
+        if (tokenList == null || tokenList.length <= 0)
+            tokenList = new String[] { getDefaultToken() };
+        this.tokenList = tokenList;
+    }
     /**
      * send data message
      *
@@ -45,12 +69,14 @@ public class SendDataMessage {
                 .setBiTag("the_sample_bi_tag_for_receipt_service")
                 .build();
 
-        String token = "AEgM-bN7dYE2dUM0MI3rudGhWEDQhLcKNQG5hNPCFkmsG1A2_UUdUuXXnVvNFPLv0EgLt94BseLbvEpCob8mED-ZxKamZfCiriTS2PioU3spqF2OZe3M1CcLtaibB9SiyA";
-        Message message = Message.builder()
-                .setData("{'k1':'v1', 'k2':'v2'}")
-                .setAndroidConfig(androidConfig)
-                .addToken(token)
-                .build();
+
+        Message.Builder msgBuilder = Message.builder().setData("{'k1':'v1', 'k2':'v2'}")
+                .setAndroidConfig(androidConfig);
+
+        for (String token : tokenList) {
+            msgBuilder.addToken(token);
+        }
+        Message message = msgBuilder.build();
 
         SendResponse response = huaweiMessaging.sendMessage(message);
         Log.i("RESPONSE", response.getMsg());

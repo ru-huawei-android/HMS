@@ -41,19 +41,29 @@ public class SendNotifyMessage {
 
     private String[] tokenList;
 
+    private String getDefaultToken() {
+        // TODO: test token is taken from test_token in /resources/url.properties file
+        return ResourceBundle.getBundle("url").getString("test_token");
+    }
+
     public SendNotifyMessage() {
         tokenList = new String[] {
-                // TODO: test token is taken from test_token in /resources/url.properties file
-                ResourceBundle.getBundle("url").getString("test_token")
+                getDefaultToken()
         };
     }
 
     public SendNotifyMessage(String token) {
+        if (token == null || token.isEmpty()) {
+            token = getDefaultToken();
+        }
         tokenList = new String[] { token };
     }
 
     public SendNotifyMessage(String[] tokenList) {
-        tokenList = tokenList;
+        if (tokenList == null || tokenList.length <= 0) {
+            tokenList = new String[] { getDefaultToken() };
+        }
+        this.tokenList = tokenList;
     }
 
     /**

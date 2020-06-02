@@ -13,12 +13,18 @@ import static com.huawei.hms.sample2.util.Constants.SENT_OK_CODE;
 public class SendRawMessage {
 
     private String jsonString;
-    public SendRawMessage() {
+    private String getDefaultJson() {
         // TODO: it is taken from test_json in /resources/url.properties file
-        jsonString = ResourceBundle.getBundle("url").getString("test_json");
+        return ResourceBundle.getBundle("url").getString("test_json");
+    }
+
+    public SendRawMessage() {
+        jsonString = getDefaultJson();
     }
 
     public SendRawMessage(String rawMessage) {
+        if (rawMessage == null || rawMessage.isEmpty())
+            rawMessage = getDefaultJson();
         jsonString = rawMessage;
     }
 
