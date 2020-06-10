@@ -7,38 +7,11 @@
     android:background="@android:color/white"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/btnForceCrash"
+    <Button
+        android:id="@+id/buttonGetToken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@mipmap/ic_launcher"
-        android:text="@string/force_a_crash"
-        android:layout_gravity="center"
-        />
-
-<!--    <com.huawei.hms.maps.MapView-->
-<!--        android:visibility="gone"-->
-<!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
-<!--        android:id="@+id/mapView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        map:cameraTargetLat="48"-->
-<!--        map:cameraTargetLng="2"-->
-<!--        map:cameraZoom="11"-->
-<!--        map:mapType="satellite"-->
-<!--        map:uiCompass="false"-->
-<!--        map:uiZoomControls="true"-->
-<!--        map:zOrderOnTop="false"/>-->
-
-<!--    <TextView-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:id="@+id/zoomPlus"-->
-<!--        android:layout_width="30dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_gravity="center_vertical|end"-->
-<!--        android:background="@android:color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:text="+"/>-->
+        android:text="@string/get_token"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

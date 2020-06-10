@@ -2,4 +2,5 @@
     <string name="app_name">HUAWEIHMSSampleProject</string>
 
     <string name="force_a_crash">send push from\nthe web console</string>
+    <string name="get_token">get token</string>
 </resources>
