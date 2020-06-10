@@ -1,2 +1,2 @@
 # HMS
-HMS Sample Project
+Example of topic-subscribtions with using PushKit.
