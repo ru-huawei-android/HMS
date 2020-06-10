@@ -14,6 +14,8 @@
    limitations under the License.
 */
 
+/* created by Evgeny Sobko 6 June 2020 */
+
 package com.huawei.hms.sample2
 
 import android.os.Bundle
