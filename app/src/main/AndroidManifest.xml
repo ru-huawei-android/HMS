@@ -2,15 +2,9 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.huawei.hms.sample2">
+    package="com.huawei.hms.dtmfirebase">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-<!--    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
-    <uses-permission android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA"/>
-
-<!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>-->
-<!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
 
     <application
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
@@ -21,7 +15,7 @@
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.huawei.hms.sample2.MainActivity">
+        <activity android:name="com.huawei.hms.dtmfirebase.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,16 +24,7 @@
 
         <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="appid=101611999"/>
-
-
-<!--        <service-->
-<!--            android:name=".HuaweiPushService"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
+            android:value="appid=102382271"/>
     </application>
 
 </manifest>

@@ -1,0 +1,637 @@
+{
+  "resources": {
+    "version": "1",
+    "variables": [
+      {
+        "exec": "__en",
+        "name": "Event Name"
+      },
+      {
+        "exec": "__ep",
+        "name": "ep_currency",
+        "params": {
+          "key": "currency"
+        }
+      },
+      {
+        "exec": "__ep",
+        "name": "ep_price",
+        "params": {
+          "key": "price"
+        }
+      },
+      {
+        "exec": "__ep",
+        "name": "ep_quantity",
+        "params": {
+          "key": "quantity"
+        }
+      }
+    ],
+    "conditions": [
+      [
+        "_eq",
+        [
+          "var",
+          0
+        ],
+        "Purchase"
+      ]
+    ],
+    "tags": [
+      {
+        "exec": "__fb",
+        "name": "FBAnalytics",
+        "conditions": [
+          "list",
+          [
+            "list",
+            0,
+            0
+          ]
+        ],
+        "params": {
+          "newParameters": [
+            "map",
+            "HiPrice",
+            [
+              "var",
+              2
+            ],
+            "HiCurrency",
+            [
+              "var",
+              1
+            ],
+            "HiQuantity",
+            [
+              "var",
+              3
+            ]
+          ],
+          "newEventName": "FromHiAnalytics",
+          "type": "change"
+        }
+      }
+    ]
+  },
+  "functions": [
+    [
+      "define",
+      "__en",
+      [],
+      {
+        "__return": [
+          {
+            "event": []
+          }
+        ]
+      }
+    ],
+    [
+      "define",
+      "__ep",
+      [
+        "params"
+      ],
+      {
+        "__init": [
+          "inputKey",
+          "bundle",
+          "tmpKey",
+          "value",
+          "forKey"
+        ]
+      },
+      {
+        "__set": [
+          "inputKey",
+          {
+            "__getmap": [
+              {
+                "__get": [
+                  "params"
+                ]
+              },
+              "key"
+            ]
+          }
+        ]
+      },
+      {
+        "__set": [
+          "bundle",
+          {
+            "__getbundle": []
+          }
+        ]
+      },
+      {
+        "__if": [
+          {
+            "_cn": [
+              {
+                "__get": [
+                  "inputKey"
+                ]
+              },
+              "."
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__set": [
+                  "tmpKey",
+                  {
+                    "__split": [
+                      {
+                        "__get": [
+                          "inputKey"
+                        ]
+                      },
+                      "\\."
+                    ]
+                  }
+                ]
+              },
+              {
+                "__set": [
+                  "value",
+                  {
+                    "__get": [
+                      "bundle"
+                    ]
+                  }
+                ]
+              },
+              {
+                "__foreach": [
+                  "forKey",
+                  {
+                    "__get": [
+                      "tmpKey"
+                    ]
+                  },
+                  {
+                    "__funclist": [
+                      {
+                        "__set": [
+                          "value",
+                          {
+                            "__getmap": [
+                              {
+                                "__get": [
+                                  "value"
+                                ]
+                              },
+                              {
+                                "__get": [
+                                  "forKey"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "__if": [
+                          {
+                            "_eq": [
+                              {
+                                "__get": [
+                                  "value"
+                                ]
+                              },
+                              {
+                                "__null": []
+                              }
+                            ]
+                          },
+                          {
+                            "__funclist": [
+                              {
+                                "__break": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__set": [
+                  "value",
+                  {
+                    "__getmap": [
+                      {
+                        "__get": [
+                          "bundle"
+                        ]
+                      },
+                      {
+                        "__get": [
+                          "inputKey"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__if": [
+          {
+            "_eq": [
+              {
+                "__get": [
+                  "value"
+                ]
+              },
+              {
+                "__null": []
+              }
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__set": [
+                  "value",
+                  {
+                    "__judge": [
+                      {
+                        "__getmap": [
+                          {
+                            "__get": [
+                              "params"
+                            ]
+                          },
+                          "default"
+                        ]
+                      },
+                      ""
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__return": [
+          {
+            "__get": [
+              "value"
+            ]
+          }
+        ]
+      }
+    ],
+    [
+      "define",
+      "__fb",
+      [
+        "params"
+      ],
+      {
+        "__init": [
+          "type",
+          "bundle",
+          "eventName",
+          "parameters"
+        ]
+      },
+      {
+        "__set": [
+          "type",
+          {
+            "__getmap": [
+              {
+                "__get": [
+                  "params"
+                ]
+              },
+              "type"
+            ]
+          }
+        ]
+      },
+      {
+        "__if": [
+          {
+            "_neq": [
+              {
+                "__getmap": [
+                  {
+                    "__get": [
+                      "params"
+                    ]
+                  },
+                  "newParameters"
+                ]
+              },
+              {
+                "__null": []
+              }
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__set": [
+                  "bundle",
+                  {
+                    "__bundle": [
+                      {
+                        "__getmap": [
+                          {
+                            "__get": [
+                              "params"
+                            ]
+                          },
+                          "newParameters"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "__set": [
+                  "parameters",
+                  {
+                    "__getmap": [
+                      {
+                        "__get": [
+                          "params"
+                        ]
+                      },
+                      "newParameters"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__set": [
+                  "bundle",
+                  {
+                    "__bundle": [
+                      {
+                        "__map": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "__set": [
+                  "parameters",
+                  {
+                    "__map": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__switch": [
+          {
+            "__get": [
+              "type"
+            ]
+          },
+          {
+            "__list": [
+              "source",
+              "change"
+            ]
+          },
+          {
+            "__list": [
+              {
+                "__funclist": [
+                  {
+                    "__set": [
+                      "eventName",
+                      {
+                        "event": []
+                      }
+                    ]
+                  },
+                  {
+                    "__break": []
+                  }
+                ]
+              },
+              {
+                "__funclist": [
+                  {
+                    "__set": [
+                      "eventName",
+                      {
+                        "__getmap": [
+                          {
+                            "__get": [
+                              "params"
+                            ]
+                          },
+                          "newEventName"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "__break": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__if": [
+          {
+            "_eq": [
+              {
+                "__get": [
+                  "eventName"
+                ]
+              },
+              {
+                "__null": []
+              }
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__return": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__fb_valid": [
+          {
+            "__get": [
+              "eventName"
+            ]
+          }
+        ]
+      },
+      {
+        "__foreach": [
+          "param",
+          {
+            "__get": [
+              "parameters"
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__fb_valid": [
+                  {
+                    "__get": [
+                      "param"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__fb_send": [
+          {
+            "__get": [
+              "eventName"
+            ]
+          },
+          {
+            "__get": [
+              "bundle"
+            ]
+          }
+        ]
+      },
+      {
+        "__return": []
+      }
+    ],
+    [
+      "define",
+      "__fb_valid",
+      [
+        "item"
+      ],
+      {
+        "__if": [
+          {
+            "_not": [
+              {
+                "_re": [
+                  {
+                    "__get": [
+                      "item"
+                    ]
+                  },
+                  "^[A-Za-z][A-Za-z0-9_]*$"
+                ]
+              }
+            ]
+          },
+          {
+            "__funclist": [
+              {
+                "__throw": [
+                  "eventName or param is invalid."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    [
+      "define",
+      "__fb_send",
+      [
+        "event",
+        "bundle"
+      ],
+      {
+        "__return": [
+          {
+            "__invoke": [
+              {
+                "__invoke": [
+                  {
+                    "__null": []
+                  },
+                  "com.google.firebase.analytics.FirebaseAnalytics",
+                  "getInstance",
+                  {
+                    "__list": [
+                      "android.content.Context"
+                    ]
+                  },
+                  {
+                    "__list": [
+                      {
+                        "__context": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              "com.google.firebase.analytics.FirebaseAnalytics",
+              "logEvent",
+              {
+                "__list": [
+                  "java.lang.String",
+                  "android.os.Bundle"
+                ]
+              },
+              {
+                "__list": [
+                  {
+                    "__get": [
+                      "event"
+                    ]
+                  },
+                  {
+                    "__get": [
+                      "bundle"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  ],
+  "download_url": "https://dtm-drru.platform.hicloud.com"
+}

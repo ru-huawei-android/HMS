@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HUAWEIHMSSampleProject</string>
+    <string name="app_name">DTMFirebaseDemo</string>
 
-    <string name="force_a_crash">force a crash</string>
+    <string name="send_event">Send event</string>
 </resources>
