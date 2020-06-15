@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.huawei.hms.sample2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huawei.pk.mapcluster">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-<!--    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
-    <uses-permission android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA"/>
-
-<!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>-->
-<!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="22" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.huawei.hms.sample2.MainActivity">
+        <activity android:name="com.huawei.pk.mapcluster.MarkerClusteringDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="com.huawei.hms.client.appid"
-            android:value="appid=101611999"/>
-
-
-<!--        <service-->
-<!--            android:name=".HuaweiPushService"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
+            android:value="appid=102299453" />
     </application>
 
 </manifest>
