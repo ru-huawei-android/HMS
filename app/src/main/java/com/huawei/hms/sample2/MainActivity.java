@@ -1,5 +1,6 @@
 package com.huawei.hms.sample2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sendNotificationPushBtn.setOnClickListener(this);
         sendRawPushBtn.setOnClickListener(this);
         sendDataMessageBtn.setOnClickListener(this);
+
+        getIntentData(getIntent());
     }
 
     @Override
@@ -158,5 +161,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, string, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void getIntentData(Intent intent) {
+        if (null != intent) {
+            // Developers can use the following three lines of code to obtain the values for dotting statistics.
+            String msgid = intent.getStringExtra("_push_msgid");
+            String cmdType = intent.getStringExtra("_push_cmd_type");
+            int notifyId = intent.getIntExtra("_push_notifyid", -1);
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                for (String key : bundle.keySet()) {
+                    String content = bundle.getString(key);
+                    Log.i(TAG, "PUSH_CLICKED data from push, key = " + key + ", content = " + content);
+                }
+            }
+            Log.i(TAG, "receive data from push, msgId = " + msgid + ", cmd = " + cmdType + ", notifyId = " + notifyId);
+        } else {
+            Log.i(TAG, "intent is null");
+        }
     }
 }
