@@ -1,0 +1,48 @@
+Для получения access_token и отправки используйте app_id = 102467791 , app_secret = 0f63d49e43d3b94f7e02989000f4c7cf5a96ce516c6dbb577ba2388ab0cd9ae6
+Push-token для отправки можно найти в logcat под тегом «PUSH_TEST»
+
+Для тестирования нотификейшнов я использовал структуры json(у меня обе работали):
+{
+  "message": {
+    "data": "{'score': '7','time': '16:42'}",
+    "notification": {
+      "title": "message title",
+      "body": "message body"
+    },
+    "android": {
+      "data": "{'androidData': '8', 'time': '16:42'}",
+      "notification": {
+        "click_action": {
+          "action": "message",
+          "type": 3
+        }
+      }
+    },
+    "token": [
+      "push token"
+    ]
+  }
+}
+
+{
+  "message": {
+    "token": [
+      "push token"
+    ],
+    "android": {
+      "data": "{'k1':'v1', 'k2':'v2'}",
+      "notification": {
+        "foreground_show": true,
+        "title": "TEST title",
+        "body": "TEST body",
+        "icon": "/raw/ic_notification",
+        "color": "#ff0000",
+        "channel_id": "galaxy_events",
+        "click_action": {
+          "type": 1,
+          "action": "message"
+        }
+      }
+    }
+  }
+}
