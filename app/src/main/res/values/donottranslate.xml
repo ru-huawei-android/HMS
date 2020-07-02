@@ -5,7 +5,7 @@
     <string name="ad_interestial_img">teste9ih9j0rc3</string>
     <string name="ad_interestial_vid">testb4znbuh3n2</string>
     <!-- В консоли можно задать один ID для всех подвидов нативной рекламы -->
-    <string name="ad_native_large">testb4znbuh3n2</string>
+    <string name="ad_native_large">testu7m3hc4gvm</string>
     <string name="ad_native_small">testb65czjivt9</string>
     <string name="ad_native_video">testy63txaom86</string>
     <!-- Id у вертикальной рекламы с наградой отличается от Id горизонтальной рекламы -->
