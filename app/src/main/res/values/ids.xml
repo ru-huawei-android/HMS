@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="server_client_id">Ваши данные</string>
+    <string name="google_app_id">Ваши данные</string>
+
+    <string name="facebook_app_id">Ваши данные</string>
+    <string name="fb_login_protocol_scheme">Ваши данные</string>
+
+    <string name="twitter_app_id">Ваши данные</string>
+    <string name="twitter_app_secret">Ваши данные</string>
+</resources>

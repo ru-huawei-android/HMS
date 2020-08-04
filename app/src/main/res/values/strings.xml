@@ -1,5 +1,30 @@
 <resources>
-    <string name="app_name">HUAWEIHMSSampleProject</string>
-
-    <string name="force_a_crash">force a crash</string>
+    <string name="app_name">Auth Service Sample project</string>
+    <string name="logo">Logo</string>
+    <string name="auth_service_test_sample_project">Auth Service test sample project</string>
+    <string name="mobile_phone_number_login">Mobile phone number login</string>
+    <string name="login_code">Login via verification code</string>
+    <string name="request_login_code">Request verification code</string>
+    <string name="number_login_phone">Login via mobile number</string>
+    <string name="e_mail_login">Email login</string>
+    <string name="huawei_id_login">Huawei ID Login</string>
+    <string name="huawei_game_service_login">Huawei Game Service Login</string>
+    <string name="apple_login">Apple login</string>
+    <string name="facebook_login">Facebook login</string>
+    <string name="twitter_login">Twitter login</string>
+    <string name="google_login">Google login</string>
+    <string name="google_play_games_login">Google Play Games login</string>
+    <string name="anonymous_login">Anonymous Login</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="link">Link</string>
+    <string name="unlink">Unlink</string>
+    <string name="user_profile_photo">User profile photo</string>
+    <string name="mobile_phone_number">Mobile phone number</string>
+    <string name="type_here_verification_code">Type here verification code</string>
+    <string name="create_user_in_appgallery">Create User in AppGallery</string>
+    <string name="permission_request_phone_title">Phone permissions request</string>
+    <string name="permission_request_phone_description">Please allow Phone permissions for this app</string>
+    <string name="user_email">Enter your e-mail</string>
+    <string name="delete_user">Delete User</string>
 </resources>

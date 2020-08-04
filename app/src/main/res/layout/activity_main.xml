@@ -1,45 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/btnForceCrash"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableTop="@mipmap/ic_launcher"
-        android:text="@string/force_a_crash"
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_gravity="center"
-        />
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-<!--    <com.huawei.hms.maps.MapView-->
-<!--        android:visibility="gone"-->
-<!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
-<!--        android:id="@+id/mapView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        map:cameraTargetLat="48"-->
-<!--        map:cameraTargetLng="2"-->
-<!--        map:cameraZoom="11"-->
-<!--        map:mapType="satellite"-->
-<!--        map:uiCompass="false"-->
-<!--        map:uiZoomControls="true"-->
-<!--        map:zOrderOnTop="false"/>-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:contentDescription="@string/logo"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo"
+            tools:srcCompat="@drawable/logo" />
 
-<!--    <TextView-->
-<!--        android:clickable="true"-->
-<!--        android:focusable="true"-->
-<!--        android:id="@+id/zoomPlus"-->
-<!--        android:layout_width="30dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_gravity="center_vertical|end"-->
-<!--        android:background="@android:color/white"-->
-<!--        android:gravity="center"-->
-<!--        android:text="+"/>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill|fill_horizontal"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/auth_service_test_sample_project"
+            android:textColor="#3F51B5"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".MainActivity">
+
+            <Button
+                android:id="@+id/btnPhoneLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/mobile_phone_number_login" />
+
+            <Button
+                android:id="@+id/btnEmailLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/e_mail_login" />
+
+            <Button
+                android:id="@+id/btnHwidLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/huawei_id_login" />
+
+            <Button
+                android:id="@+id/btnHwGameLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/huawei_game_service_login" />
+
+            <Button
+                android:id="@+id/btnFbLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/facebook_login" />
+
+            <Button
+                android:id="@+id/btnTwLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/twitter_login" />
+
+            <Button
+                android:id="@+id/btnGoogleLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/google_login" />
+
+            <Button
+                android:id="@+id/btnAnonymousLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/anonymous_login" />
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/logout" />
+
+            <Button
+                android:id="@+id/btnDeleteUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/delete_user" />
+
+            <include
+                layout="@layout/bottom_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

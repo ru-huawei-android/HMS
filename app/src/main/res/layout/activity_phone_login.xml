@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".PhoneActivity">
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="@string/mobile_phone_number"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/btnPhoneCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/request_login_code" />
+
+    <LinearLayout
+        android:id="@+id/llCodeInput"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <EditText
+            android:id="@+id/editTextVerificationCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:hint="@string/type_here_verification_code"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/btnPhoneCodeOk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="@android:string/ok" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnCreateUserInAg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="@string/create_user_in_appgallery" />
+
+    <Button
+        android:id="@+id/btnPhoneLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:text="@string/logout" />
+
+
+    <include
+        layout="@layout/bottom_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+</LinearLayout>
