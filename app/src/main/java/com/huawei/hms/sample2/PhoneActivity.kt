@@ -154,7 +154,6 @@ class PhoneActivity : BaseActivity() {
             PhoneUser.Builder()
                 /**Код страны (международный), для России это 7, вводится без знака +*/
                 .setCountryCode(phoneNumber!!.substring(1, 2))
-                /** Чуш обачья -> The value of phoneNumber must contains the country/region code and mobile number.*/
                 /** Номер телефона без кода страны т.е. 9876543210, вводится без разделителей и доп. символов*/
                 .setPhoneNumber(phoneNumber!!.substring(2))
                 .setVerifyCode(verifyCode)
@@ -170,7 +169,6 @@ class PhoneActivity : BaseActivity() {
             PhoneUser.Builder()
                 /**Код страны (международный), для России это 7, вводится без знака +*/
                 .setCountryCode(phoneNumber!!.substring(1, 2))
-                /** Чуш обачья -> The value of phoneNumber must contains the country/region code and mobile number.*/
                 /** Номер телефона без кода страны т.е. 9876543210, вводится без разделителей и доп. символов*/
                 .setPhoneNumber(phoneNumber!!.substring(2))
                 .setVerifyCode(verifyCode)
